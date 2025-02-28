@@ -1,19 +1,21 @@
-import { links } from '@/shared';
 import Link from 'next/link';
+import { StashIcon, ChatIcon, CalendarIcon } from '..';
 
 export const Navigation = () => {
+  const links = [
+    { link: '/list', icon: <StashIcon /> },
+    { link: '/chat', icon: <ChatIcon /> },
+    { link: '/calendar', icon: <CalendarIcon /> },
+  ];
   return (
-    <nav className="h-full bg-slate-900 flex flex-col">
-      <div className="flex flex-col gap-2">
-        {Object.values(links).map(link => (
+    <nav className="h-full bg-slate-900 flex flex-col px-4 py-2">
+      <div className="flex xl:flex-col flex-row  gap-2">
+        {links.map(({ link, icon }) => (
           <Link href={link} key={link} className="capitalize">
-            {link.slice(1)}
+            {icon}
           </Link>
         ))}
       </div>
-      <button className="relative cursor-pointer left-[80%] h-[40px] w-[60px] bg-red-500 flex items-center justify-center top-[calc(50%-88px)]">
-        {'<'}
-      </button>
     </nav>
   );
 };
