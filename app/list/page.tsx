@@ -1,5 +1,5 @@
-import { StashList } from '@/components';
+import { StashTable } from '@/components';
 
-export default function List() {
-  return <StashList />;
+export default function Table() {
+  return <StashTable />;
 }
