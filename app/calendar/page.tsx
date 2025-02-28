@@ -1,3 +1,4 @@
+'use client';
 import { Calendar as CalendarComponent } from '@/components';
 
 export default function Calendar() {
