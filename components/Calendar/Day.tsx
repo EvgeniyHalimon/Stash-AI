@@ -8,8 +8,8 @@ interface IDateCard {
 
 const Day = ({ date, cardClass }: IDateCard) => {
   return (
-    <div className={`calendarDate calendarDayStat ${cardClass}`}>
-      <div className={`calendarInnerBox`}>{JSON.stringify(date)}</div>
+    <div className={`min-w-20 w-max-full h-20 shadow-custom ${cardClass}`}>
+      <div className={`calendarInnerBox text-black`}>{date.dayNum}</div>
     </div>
   );
 };

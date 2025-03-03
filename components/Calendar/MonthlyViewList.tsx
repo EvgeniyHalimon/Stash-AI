@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, Fragment } from 'react';
 
 import Day from './Day';
 import { useDate } from './hooks/useDate';
@@ -45,14 +45,14 @@ export const MonthlyViewList = () => {
         ))}
       </div>
       <div className={'secondBlock'}>
-        {days.map((day: IDaysTypes, index: number) => (
-          <>
+        {days.map((day: IDaysTypes) => (
+          <Fragment key={JSON.stringify(day)}>
             {day.value === 'padding' ? (
-              <Day key={index} date={day} cardClass={'cardBackground'} />
+              <Day date={day} cardClass={'bg-gray-300'} />
             ) : (
-              <Day date={day} key={index} />
+              <Day date={day} cardClass="bg-white" />
             )}
-          </>
+          </Fragment>
         ))}
       </div>
     </div>

@@ -7,7 +7,6 @@ interface ITableRow extends HTMLAttributes<HTMLTableRowElement> {
 export const TableRow = ({ children, ...rest }: ITableRow) => {
   return (
     <tr {...rest}>
-      {' '}
       <>{children}</>
     </tr>
   );

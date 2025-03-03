@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useMemo } from 'react';
 import { MonthPicker, MonthlyViewList } from '..';
 import AppContext from './Context';

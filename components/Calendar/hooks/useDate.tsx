@@ -43,7 +43,7 @@ export const useDate = (nav: number) => {
       firstDayOfMonth.toLocaleDateString('en-us', { weekday: 'long' }),
     );
 
-    const totalCells = 42; // 6 строк * 7 дней
+    const totalCells = 42;
     const daysArr: Day[] = [];
 
     for (let i = 1; i <= totalCells; i++) {
