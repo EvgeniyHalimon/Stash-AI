@@ -33,22 +33,21 @@ export const MonthlyViewList = () => {
 
   return (
     <div>
-      <div className={`firstBlock daysBox`}>
+      <div className="grid grid-cols-7">
         {daysArr.map((day: IDays) => (
           <p
             key={day.longName}
-            style={{ width: `${100 / 7}%` }}
-            className={`${days}`}
+            className="text-center font-semibold bg-amber-100 text-black shadow-custom"
           >
             {day.shortName.toUpperCase()}
           </p>
         ))}
       </div>
-      <div className={'secondBlock'}>
+      <div className="grid grid-cols-7 ">
         {days.map((day: IDaysTypes) => (
           <Fragment key={JSON.stringify(day)}>
             {day.value === 'padding' ? (
-              <Day date={day} cardClass={'bg-gray-300'} />
+              <Day date={day} cardClass="bg-gray-300" />
             ) : (
               <Day date={day} cardClass="bg-white" />
             )}

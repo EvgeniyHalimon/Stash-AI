@@ -6,24 +6,6 @@
   background-color: white;
 }
 
-.calendarInnerBox {
-  padding: 5px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.firstBlock {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.daysBox {
-  box-shadow: 0px 1px 1px rgb(0 0 0 / 10%), 0px 0px 0px 1px rgb(70 79 96 / 16%),
-    0px 2px 5px rgb(89 96 120 / 10%);
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-}
-
 .secondBlock {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
