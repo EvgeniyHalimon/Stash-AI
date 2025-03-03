@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 
-import './Calendar.css';
 import AppContext from './Context';
+import { LeftIcon, RightIcon } from '..';
 
 export const MonthPicker = () => {
   const { month, setMonth, year, setYear } = useContext(AppContext);
@@ -37,15 +37,15 @@ export const MonthPicker = () => {
   };
 
   return (
-    <div className={'pickerBlock'}>
-      <button className={'iconButton'} onClick={() => goBackward()}>
-        {'<'}
+    <div className="flex items-center mb-3">
+      <button onClick={() => goBackward()}>
+        <LeftIcon />
       </button>
-      <p className={'range'}>
+      <p className="font-bold text-xl">
         {months[month].toUpperCase()} {year}
       </p>
-      <button className={'iconButton'} onClick={() => goForward()}>
-        {'>'}
+      <button onClick={() => goForward()}>
+        <RightIcon />
       </button>
     </div>
   );

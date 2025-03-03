@@ -1,13 +1,10 @@
-import { Calendar, Navigation, StashTable } from '@/components';
+import { Calendar, StashTable } from '@/components';
 
 export default function Home() {
   return (
-    <div className="flex gap-4 xl:h-[100dvh] xl:flex-row flex-col ">
-      <Navigation />
-      <div className="grid grid-cols-2 grid-rows-2 gap-5 px-4">
-        <StashTable />
-        <Calendar />
-      </div>
+    <div className="w-full grid xl:grid-cols-2 xl:grid-rows-2 gap-5 p-4">
+      <StashTable />
+      <Calendar />
     </div>
   );
 }

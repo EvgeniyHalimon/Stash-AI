@@ -1,5 +1,4 @@
 import { IDaysTypes } from '.';
-import './Calendar.css';
 
 interface IDateCard {
   date: IDaysTypes;

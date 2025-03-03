@@ -4,8 +4,6 @@ import Day from './Day';
 import { useDate } from './hooks/useDate';
 import AppContext from './Context';
 
-import './Calendar.css';
-
 interface IDays {
   shortName: string;
   longName: string;
