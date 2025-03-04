@@ -8,3 +8,4 @@ export * from './PlusIcon';
 export * from './SendIcon';
 export * from './LeftIcon';
 export * from './RightIcon';
+export * from './LogoIcon';

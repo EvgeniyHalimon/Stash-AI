@@ -1,8 +1,9 @@
 import Link from 'next/link';
-import { StashIcon, ChatIcon, CalendarIcon } from '..';
+import { StashIcon, ChatIcon, CalendarIcon, LogoIcon } from '..';
 
 export const Navigation = () => {
   const links = [
+    { link: '/', icon: <LogoIcon /> },
     { link: '/list', icon: <StashIcon /> },
     { link: '/chat', icon: <ChatIcon /> },
     { link: '/calendar', icon: <CalendarIcon /> },

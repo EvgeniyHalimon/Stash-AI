@@ -24,10 +24,23 @@ ChartJS.register(
 );
 
 const data = {
-  labels: ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь'],
+  labels: [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ],
   datasets: [
     {
-      label: 'Продажи',
+      label: 'Spending',
       data: [12, 19, 3, 5, 2, 3],
       borderColor: 'rgb(75, 192, 192)',
       backgroundColor: 'rgba(75, 192, 192, 0.2)',
@@ -41,7 +54,7 @@ const options = {
   responsive: true,
   plugins: {
     legend: { position: 'top' as const },
-    title: { display: true, text: 'Статистика продаж' },
+    title: { display: true, text: 'Spending' },
   },
   scales: {
     y: { beginAtZero: true },
@@ -51,7 +64,7 @@ const options = {
 export const Chart = () => {
   return (
     <div className="w-full h-[400px] max-w-[600px] mx-auto bg-white p-4 rounded-xl shadow-md">
-      <Line data={data} options={options} height={'300px'} />;
+      <Line data={data} options={options} />;
     </div>
   );
 };

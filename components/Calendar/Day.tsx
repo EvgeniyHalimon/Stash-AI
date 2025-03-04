@@ -7,8 +7,11 @@ interface IDateCard {
 
 const Day = ({ date, cardClass }: IDateCard) => {
   return (
-    <div className={`w-full h-20 shadow-custom ${cardClass}`}>
-      <div className={` text-black pl-2`}>{date.dayNum}</div>
+    <div
+      className={`w-full min-h-10 shadow-custom flex flex-col p-2 text-black  ${cardClass} `}
+    >
+      <div>{date.dayNum}</div>
+      <div>test</div>
     </div>
   );
 };

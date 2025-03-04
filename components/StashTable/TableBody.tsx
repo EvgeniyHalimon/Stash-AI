@@ -13,7 +13,7 @@ export const TableBody = () => {
         <TableData className="px-6 py-4">Silver</TableData>
         <TableData className="px-6 py-4">Laptop</TableData>
         <TableData className="px-6 py-4">$2999</TableData>
-        <TableData className="px-6 py-4 text-right">Edit</TableData>
+        <TableData className="px-6 py-4">Edit</TableData>
       </TableRow>
     </tbody>
   );

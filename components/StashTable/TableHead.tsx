@@ -7,8 +7,10 @@ export const TableHead = () => {
       <TableRow>
         {tableHead.map(title => (
           <TableHeader scope="col" className="px-6 py-3" key={title}>
-            {title}
-            <ChevronIcon />
+            <div className="flex gap-1 items-center">
+              {title}
+              <ChevronIcon />
+            </div>
           </TableHeader>
         ))}
         <TableHeader scope="col" className="px-6 py-3">

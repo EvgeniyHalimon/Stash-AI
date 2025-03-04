@@ -38,13 +38,21 @@ export const MonthPicker = () => {
 
   return (
     <div className="flex items-center mb-3">
-      <button onClick={() => goBackward()}>
+      <button
+        type="button"
+        className="cursor-pointer"
+        onClick={() => goBackward()}
+      >
         <LeftIcon />
       </button>
       <p className="font-bold text-xl">
         {months[month].toUpperCase()} {year}
       </p>
-      <button onClick={() => goForward()}>
+      <button
+        type="button"
+        className="cursor-pointer"
+        onClick={() => goForward()}
+      >
         <RightIcon />
       </button>
     </div>

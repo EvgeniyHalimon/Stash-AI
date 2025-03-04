@@ -1,5 +1,9 @@
 import { StashTable } from '@/components';
 
 export default function Table() {
-  return <StashTable />;
+  return (
+    <div className="p-4 w-full">
+      <StashTable />
+    </div>
+  );
 }
