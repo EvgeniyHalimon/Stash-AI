@@ -5,7 +5,9 @@ import { ReactNode } from 'react';
 
 const queryClient = new QueryClient();
 
-export default function Providers({ children }: { children: ReactNode }) {
+export default function Providers({
+  children,
+}: Readonly<{ children: ReactNode }>) {
   return (
     <QueryClientProvider client={queryClient}>
       {children}
