@@ -21,16 +21,20 @@ export const MonthPicker = () => {
   ];
 
   const goBackward = () => {
-    if (month <= 11) setMonth(month - 1);
-    if (month == 0) {
+    if (month <= 11) {
+      setMonth(month - 1);
+    }
+    if (month === 0) {
       setMonth(11);
       setYear(year - 1);
     }
   };
 
   const goForward = () => {
-    if (month <= 11) setMonth(month + 1);
-    if (month == 11) {
+    if (month <= 11) {
+      setMonth(month + 1);
+    }
+    if (month === 11) {
       setMonth(0);
       setYear(year + 1);
     }
