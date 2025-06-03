@@ -9,8 +9,8 @@ export const Navigation = () => {
     { link: '/calendar', icon: <CalendarIcon /> },
   ];
   return (
-    <nav className="h-full bg-slate-900 flex flex-col px-4 py-2">
-      <div className="flex xl:flex-col flex-row  gap-2">
+    <nav className="flex h-full flex-col bg-slate-900 px-4 py-2">
+      <div className="flex flex-row gap-2 xl:flex-col">
         {links.map(({ link, icon }) => (
           <Link href={link} key={link} className="capitalize">
             {icon}

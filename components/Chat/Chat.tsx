@@ -16,8 +16,8 @@ const messages = [
 
 export const Chat = () => {
   return (
-    <div className="flex flex-col bg-slate-700 w-full gap-3 justify-between p-4">
-      <div className="flex flex-col w gap-1.5 overflow-y-auto custom-scroll">
+    <div className="flex w-full flex-col justify-between gap-3 bg-slate-700 p-4">
+      <div className="w custom-scroll flex flex-col gap-1.5 overflow-y-auto">
         {messages.map(({ text, isIncomingMessage }) => (
           <Message
             key={text}

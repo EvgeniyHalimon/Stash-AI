@@ -8,7 +8,7 @@ export const Message = ({ text, isIncomingMessage }: IMessage) => {
     <div
       className={`${
         isIncomingMessage ? 'bg-amber-50' : 'bg-amber-100'
-      } text-black rounded-lg p-2`}
+      } rounded-lg p-2 text-black`}
     >
       {text}
     </div>

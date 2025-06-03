@@ -25,7 +25,7 @@ export const Calendar = () => {
   );
   return (
     <AppContext.Provider value={AppContextValue}>
-      <div>
+      <div className="h-[450px]">
         <MonthPicker />
         <MonthlyViewList />
       </div>

@@ -63,7 +63,7 @@ const options = {
 
 export const Chart = () => {
   return (
-    <div className="w-full h-[400px] max-w-[600px] mx-auto bg-white p-4 rounded-xl shadow-md">
+    <div className="mx-auto h-[436px] w-full bg-white p-4">
       <Line data={data} options={options} />;
     </div>
   );

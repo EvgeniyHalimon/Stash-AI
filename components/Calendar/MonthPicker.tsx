@@ -37,20 +37,20 @@ export const MonthPicker = () => {
   };
 
   return (
-    <div className="flex items-center mb-3">
+    <div className="flex items-center bg-white">
       <button
         type="button"
-        className="cursor-pointer"
+        className="cursor-pointer text-black"
         onClick={() => goBackward()}
       >
         <LeftIcon />
       </button>
-      <p className="font-bold text-xl">
+      <p className="text-xl font-bold text-black">
         {months[month].toUpperCase()} {year}
       </p>
       <button
         type="button"
-        className="cursor-pointer"
+        className="cursor-pointer text-black"
         onClick={() => goForward()}
       >
         <RightIcon />

@@ -16,10 +16,10 @@ export const MessageInput = () => {
     }
   };
   return (
-    <form className="flex h-auto items-center gap-3 p-3 rounded-2xl bg-cyan-800">
+    <form className="flex h-auto items-center gap-3 rounded-2xl bg-cyan-800 p-3">
       <textarea
         ref={textareaRef}
-        className="resize-none w-full max-h-[150px] h-12 p-2 text-white bg-transparent border-none outline-none placeholder-gray-300  overflow-y-auto custom-scroll"
+        className="custom-scroll h-12 max-h-[150px] w-full resize-none overflow-y-auto border-none bg-transparent p-2 text-white placeholder-gray-300 outline-none"
         placeholder="Type here"
         value={value}
         onChange={e => setValue(e.target.value)}

@@ -2,7 +2,7 @@ import { StashTable } from '@/components';
 
 export default function Table() {
   return (
-    <div className="p-4 w-full">
+    <div className="w-full p-4">
       <StashTable />
     </div>
   );

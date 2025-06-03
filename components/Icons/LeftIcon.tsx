@@ -5,7 +5,7 @@ export const LeftIcon = () => {
       width={24}
       height={24}
       viewBox="0 0 24 24"
-      className="w-5 h-5"
+      className="h-5 w-5"
     >
       <path
         fill="none"

@@ -35,13 +35,13 @@ export const MonthlyViewList = () => {
         {daysArr.map((day: IDays) => (
           <p
             key={day.longName}
-            className="text-center font-semibold bg-amber-100 text-black shadow-custom"
+            className="shadow-custom bg-amber-100 text-center font-semibold text-black"
           >
             {day.shortName.toUpperCase()}
           </p>
         ))}
       </div>
-      <div className="grid grid-cols-7 ">
+      <div className="grid grid-cols-7">
         {days.map((day: IDaysTypes) => (
           <Fragment key={JSON.stringify(day)}>
             {day.value === 'padding' ? (
