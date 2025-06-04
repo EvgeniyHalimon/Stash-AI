@@ -1,19 +1,20 @@
 'use client';
 import { Calendar, StashTable, Chart } from '@/components';
+import { fetchWithAuth } from '@/shared/fetchWithAuth';
 import { useQuery } from '@tanstack/react-query';
 
-async function fetchPosts() {
-  const res = await fetch('https://jsonplaceholder.typicode.com/posts');
-  if (!res.ok) {
-    throw new Error('Failed to fetch posts');
-  }
+async function fetchGoods() {
+  const res = await fetchWithAuth(
+    `${process.env.NEXT_PUBLIC_API_URL}/goods/by-user`,
+  );
+
   return res.json();
 }
 
 export default function Home() {
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['posts'],
-    queryFn: fetchPosts,
+    queryKey: ['goods'],
+    queryFn: fetchGoods,
   });
   console.log(
     '🚀 ~ Home ~ data, isLoading, isError, error :',

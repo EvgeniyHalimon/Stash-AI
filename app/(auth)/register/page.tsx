@@ -3,6 +3,8 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useRouter } from 'next/navigation';
+import { useMutation } from '@tanstack/react-query';
 
 const schema = yup
   .object({
@@ -39,7 +41,20 @@ const schema = yup
 
 type FormData = yup.InferType<typeof schema>;
 
+async function signUp(data: FormData) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  return res;
+}
+
 export default function Register() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -48,7 +63,19 @@ export default function Register() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: FormData) => console.log(data);
+  const { isPending, mutate } = useMutation({
+    mutationFn: signUp,
+    onSuccess: () => {
+      router.replace('/');
+    },
+    onError: (error: unknown) => {
+      console.error('Login failed:', error);
+    },
+  });
+
+  const onSubmit = (data: FormData) => {
+    mutate(data);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -71,7 +98,7 @@ export default function Register() {
       />
       <p>{errors.confirmPassword?.message}</p>
 
-      <input type="submit" value="Register" />
+      <input type="submit" value="Register" disabled={isPending} />
     </form>
   );
 }

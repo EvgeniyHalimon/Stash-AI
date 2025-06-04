@@ -27,3 +27,16 @@ export interface ITokens {
   accessToken: string;
   refreshToken: string;
 }
+
+export interface IGoods {
+  _id: string;
+  user: IUser;
+  title: string;
+  price: number;
+  category: string;
+  postponed: number;
+  remainingToBePostponed: number;
+  whenWillItEnd: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
