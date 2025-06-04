@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Navigation } from '@/components';
+import { AuthWrapper, Navigation } from '@/components';
 
 export const metadata: Metadata = {
   title: 'Assistant',
@@ -13,8 +13,10 @@ export default function MainLayout({
 }>) {
   return (
     <div className="flex flex-col xl:h-dvh xl:flex-row">
-      <Navigation />
-      {children}
+      <AuthWrapper>
+        <Navigation />
+        {children}
+      </AuthWrapper>
     </div>
   );
 }

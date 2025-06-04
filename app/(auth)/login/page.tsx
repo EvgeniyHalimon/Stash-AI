@@ -3,6 +3,9 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { saveTokens, saveUserInLocalStorage } from '@/shared/tokenUtils';
 
 const schema = yup
   .object({
@@ -16,7 +19,27 @@ const schema = yup
 
 type FormData = yup.InferType<typeof schema>;
 
+async function login(data: FormData) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (res && res.status === 201) {
+    const { user, accessToken, refreshToken } = await res.json();
+    saveTokens({ accessToken, refreshToken });
+    saveUserInLocalStorage(user);
+  }
+
+  return res;
+}
+
 export default function Login() {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -25,7 +48,19 @@ export default function Login() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: FormData) => console.log(data);
+  const { isPending, mutate } = useMutation({
+    mutationFn: login,
+    onSuccess: () => {
+      router.replace('/');
+    },
+    onError: (error: unknown) => {
+      console.error('Login failed:', error);
+    },
+  });
+
+  const onSubmit = (data: FormData) => {
+    mutate(data);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -35,7 +70,9 @@ export default function Login() {
       <input {...register('password')} type="password" placeholder="Password" />
       <p>{errors.password?.message}</p>
 
-      <input type="submit" value="Sign in" />
+      <button type="submit" disabled={isPending}>
+        Sign in
+      </button>
     </form>
   );
 }

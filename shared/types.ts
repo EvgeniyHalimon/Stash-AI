@@ -3,3 +3,27 @@ export interface IDaysTypes {
   date: string;
   dayNum: number | string;
 }
+
+export enum UserRolesEnum {
+  USER = 'user',
+  ADMIN = 'admin',
+}
+
+export type UserRole = UserRolesEnum.USER | UserRolesEnum.ADMIN;
+
+export interface IUser {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password?: string;
+  role: UserRole;
+  active: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface ITokens {
+  accessToken: string;
+  refreshToken: string;
+}
