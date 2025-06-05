@@ -16,7 +16,7 @@ export const TableBody = ({ goods }: { goods: IGoods[] }) => {
         }) => (
           <TableRow
             key={_id}
-            className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800"
+            className="border-b border-gray-200 bg-gray-800 transition-all duration-500 hover:bg-gray-900 dark:border-gray-700"
           >
             <th
               scope="row"

@@ -5,6 +5,8 @@ import { TableBody, TableHead } from '..';
 import { fetchWithAuth } from '@/shared/fetchWithAuth';
 import { useEffect, useState } from 'react';
 import { IGoods, Params, SortType } from '@/shared';
+import Pagination from './Pagination';
+import { usePathname } from 'next/navigation';
 
 async function fetchGoods(params: Params = {}) {
   const query = new URLSearchParams(
@@ -20,14 +22,16 @@ async function fetchGoods(params: Params = {}) {
 }
 
 export const StashTable = () => {
+  const p = usePathname();
   const [sort, setSort] = useState<SortType>('desc');
   const [sortBy, setSortBy] = useState('title');
   const [goods, setGoods] = useState<IGoods[]>([]);
-  const [page] = useState<number>(1);
+  const [page, setPage] = useState<number>(1);
+  const [count, setCount] = useState<number>(1);
 
-  const queryParams: Params = {
+  const queryParams = {
     page,
-    limit: 8,
+    limit: p === '/list' ? 12 : 8,
     sortBy,
     sort,
   };
@@ -43,12 +47,15 @@ export const StashTable = () => {
   useEffect(() => {
     if (data?.goods) {
       setGoods(data.goods);
+      setCount(data.count);
     }
-  }, [data?.goods, isLoading]);
+  }, [data?.count, data?.goods, isLoading]);
 
   return (
     <div className="relative h-fit overflow-x-auto shadow-md">
-      <table className="w-full text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400">
+      <table
+        className={`w-full text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400 ${p === '/list' ? 'mb-4' : 'mb-0'}`}
+      >
         <TableHead
           sort={sort}
           sortBy={sortBy}
@@ -57,6 +64,15 @@ export const StashTable = () => {
         />
         <TableBody goods={goods} />
       </table>
+      {p === '/list' && (
+        <Pagination
+          page={page}
+          count={Math.ceil(count / queryParams.limit)}
+          onChangePage={page => setPage(page)}
+          onPrevPage={() => setPage(prev => prev - 1)}
+          onNextPage={() => setPage(prev => prev + 1)}
+        />
+      )}
     </div>
   );
 };

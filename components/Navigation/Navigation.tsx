@@ -10,7 +10,7 @@ export const Navigation = () => {
     { link: '/profile', icon: <UserIcon /> },
   ];
   return (
-    <nav className="flex h-full flex-col bg-slate-900 p-4">
+    <nav className="flex h-auto flex-col bg-slate-900 p-4">
       <div className="flex flex-row gap-2 xl:flex-col">
         {links.map(({ link, icon }) => (
           <Link href={link} key={link} className="capitalize">
