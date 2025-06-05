@@ -1,4 +1,9 @@
-import { getAccessToken, getRefreshToken } from './tokenUtils';
+import {
+  getAccessToken,
+  getRefreshToken,
+  removeUserDataFromLocalStorage,
+  saveTokens,
+} from './tokenUtils';
 
 export async function fetchWithAuth(input: RequestInfo, init?: RequestInit) {
   const accessToken = getAccessToken();
@@ -35,18 +40,23 @@ export async function fetchWithAuth(input: RequestInfo, init?: RequestInit) {
 async function refreshToken() {
   const refreshToken = getRefreshToken();
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`, {
-    method: 'POST',
+    method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${refreshToken})}`,
+      Authorization: `Bearer ${refreshToken}`,
     },
   });
 
   if (res.ok) {
     const { accessToken, refreshToken: newRefresh } = await res.json();
-    localStorage.setItem('accessToken', accessToken);
-    localStorage.setItem('refreshToken', newRefresh);
+    saveTokens({
+      accessToken,
+      refreshToken: newRefresh,
+    });
     return true;
+  } else {
+    removeUserDataFromLocalStorage();
+    window.location.href = '/login';
   }
 
   return false;

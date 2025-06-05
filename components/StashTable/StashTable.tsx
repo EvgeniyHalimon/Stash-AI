@@ -4,14 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { TableBody, TableHead } from '..';
 import { fetchWithAuth } from '@/shared/fetchWithAuth';
 import { useEffect, useState } from 'react';
-import { IGoods } from '@/shared';
-
-type Params = {
-  page?: number;
-  limit?: number;
-  sortBy?: string;
-  sort?: 'asc' | 'desc';
-};
+import { IGoods, Params, SortType } from '@/shared';
 
 async function fetchGoods(params: Params = {}) {
   const query = new URLSearchParams(
@@ -27,12 +20,13 @@ async function fetchGoods(params: Params = {}) {
 }
 
 export const StashTable = () => {
-  const [sort, setSort] = useState<'asc' | 'desc'>('desc');
+  const [sort, setSort] = useState<SortType>('desc');
   const [sortBy, setSortBy] = useState('title');
   const [goods, setGoods] = useState<IGoods[]>([]);
-  console.log({ sort, sortBy });
+  const [page] = useState<number>(1);
+
   const queryParams: Params = {
-    page: 1,
+    page,
     limit: 8,
     sortBy,
     sort,
@@ -43,6 +37,7 @@ export const StashTable = () => {
     queryFn: () => fetchGoods(queryParams),
     staleTime: 1000 * 60 * 10,
     refetchOnWindowFocus: false,
+    refetchOnMount: false,
   });
 
   useEffect(() => {

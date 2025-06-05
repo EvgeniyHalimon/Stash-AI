@@ -1,3 +1,4 @@
+import { SortType } from '@/shared';
 import { ChevronIcon, TableHeader, TableRow } from '..';
 
 export const TableHead = ({
@@ -6,9 +7,9 @@ export const TableHead = ({
   setSort,
   setSortBy,
 }: {
-  sort: 'asc' | 'desc';
+  sort: SortType;
   sortBy: string;
-  setSort: (value: 'asc' | 'desc') => void;
+  setSort: (value: SortType) => void;
   setSortBy: (value: string) => void;
 }) => {
   const tableHead = [

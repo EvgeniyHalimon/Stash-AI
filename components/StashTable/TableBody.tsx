@@ -20,20 +20,20 @@ export const TableBody = ({ goods }: { goods: IGoods[] }) => {
           >
             <th
               scope="row"
-              className="px-6 py-4 font-medium whitespace-nowrap text-gray-900 dark:text-white"
+              className="px-4 py-4 font-medium whitespace-nowrap text-gray-900 dark:text-white"
             >
               {title}
             </th>
-            <TableData className="px-6 py-4">{price}</TableData>
-            <TableData className="px-6 py-4">{category}</TableData>
-            <TableData className="px-6 py-4">{postponed}</TableData>
-            <TableData className="px-6 py-4">
+            <TableData className="px-4 py-4">{price}</TableData>
+            <TableData className="px-4 py-4">{category}</TableData>
+            <TableData className="px-4 py-4">{postponed}</TableData>
+            <TableData className="px-4 py-4">
               {remainingToBePostponed}
             </TableData>
-            <TableData className="px-6 py-4">
+            <TableData className="px-4 py-4">
               {formatDate(whenWillItEnd)}
             </TableData>
-            <TableData className="px-6 py-4">Edit / Delete</TableData>
+            <TableData className="px-4 py-4">Edit / Delete</TableData>
           </TableRow>
         ),
       )}

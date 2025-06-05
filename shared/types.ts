@@ -40,3 +40,12 @@ export interface IGoods {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface Params {
+  page?: number;
+  limit?: number;
+  sortBy?: string;
+  sort?: SortType;
+}
+
+export type SortType = 'asc' | 'desc';
