@@ -1,9 +1,9 @@
 'use client';
 
-import React from 'react';
-import { Line } from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
+  ArcElement,
   CategoryScale,
   LinearScale,
   PointElement,
@@ -14,6 +14,7 @@ import {
 } from 'chart.js';
 
 ChartJS.register(
+  ArcElement,
   CategoryScale,
   LinearScale,
   PointElement,
@@ -24,32 +25,20 @@ ChartJS.register(
 );
 
 const data = {
-  labels: [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-  ],
+  labels: ['Red', 'Blue', 'Yellow'],
   datasets: [
     {
-      label: 'Spending',
-      data: [12, 19, 3, 5, 2, 3],
-      borderColor: 'rgb(75, 192, 192)',
-      backgroundColor: 'rgba(75, 192, 192, 0.2)',
-      borderWidth: 2,
-      fill: true,
+      label: 'My First Dataset',
+      data: [300, 50, 100],
+      backgroundColor: [
+        'rgb(255, 99, 132)',
+        'rgb(54, 162, 235)',
+        'rgb(255, 205, 86)',
+      ],
+      hoverOffset: 4,
     },
   ],
 };
-
 const options = {
   responsive: true,
   plugins: {
@@ -63,8 +52,8 @@ const options = {
 
 export const Chart = () => {
   return (
-    <div className="mx-auto h-[436px] w-full bg-white p-4">
-      <Line data={data} options={options} />;
+    <div className="h-fit bg-white p-4">
+      <Doughnut data={data} options={options} />;
     </div>
   );
 };

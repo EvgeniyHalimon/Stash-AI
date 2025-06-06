@@ -24,11 +24,11 @@ export const Calendar = () => {
     [month, year, number],
   );
   return (
-    <AppContext.Provider value={AppContextValue}>
-      <div className="h-[450px]">
+    <div className="flex w-full flex-col">
+      <AppContext.Provider value={AppContextValue}>
         <MonthPicker />
         <MonthlyViewList />
-      </div>
-    </AppContext.Provider>
+      </AppContext.Provider>
+    </div>
   );
 };

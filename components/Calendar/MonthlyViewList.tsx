@@ -30,7 +30,7 @@ export const MonthlyViewList = () => {
   const { days } = useDate(number);
 
   return (
-    <div>
+    <div className="flex flex-col">
       <div className="grid grid-cols-7">
         {daysArr.map((day: IDays) => (
           <p

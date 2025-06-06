@@ -52,7 +52,7 @@ export const StashTable = () => {
   }, [data?.count, data?.goods, isLoading]);
 
   return (
-    <div className="relative h-fit overflow-x-auto shadow-md">
+    <div className="h-fit overflow-x-auto shadow-md">
       <table
         className={`w-full text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400 ${p === '/list' ? 'mb-4' : 'mb-0'}`}
       >

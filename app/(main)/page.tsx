@@ -1,39 +1,57 @@
 'use client';
 import { Calendar, StashTable, Chart } from '@/components';
+import { IGoods } from '@/shared';
+import DashboardContext from '@/shared/DashboardContext';
 import { fetchWithAuth } from '@/shared/fetchWithAuth';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
-async function fetchGoods() {
-  const res = await fetchWithAuth(
-    `${process.env.NEXT_PUBLIC_API_URL}/goods/by-user`,
-  );
+async function fetchGoods(params: { date: string }) {
+  const query = new URLSearchParams(
+    params as Record<string, string>,
+  ).toString();
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/goods/by-user?${query}`;
 
+  const res = await fetchWithAuth(url);
+  if (!res.ok) {
+    throw new Error('Failed to fetch posts');
+  }
   return res.json();
 }
 
 export default function Home() {
+  const [goods, setGoods] = useState<IGoods[]>([]);
+  const d = new Date();
+  const date = d.toISOString().slice(0, 10);
   const { data, isLoading, isFetching } = useQuery({
-    queryKey: ['goods-by-user'],
-    queryFn: fetchGoods,
+    queryKey: ['goods-by-user', date],
+    queryFn: () => fetchGoods({ date }),
     staleTime: 1000 * 60 * 10,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
   });
 
   useEffect(() => {
-    console.log('🔄 Home data changed:', {
-      hasData: !!data,
-      isLoading,
-      isFetching,
-    });
+    if (data.goods) {
+      setGoods(data.goods);
+    }
   }, [data, isLoading, isFetching]);
 
+  const DashboardContextValue = useMemo(
+    () => ({
+      goods,
+      setGoods,
+    }),
+    [goods],
+  );
+
   return (
-    <div className="grid w-full gap-5 p-4 xl:grid-cols-2 xl:grid-rows-2">
-      <Calendar />
-      <Chart />
-      <StashTable />
+    <div className="flex w-full flex-wrap gap-4 p-4">
+      <DashboardContext.Provider value={DashboardContextValue}>
+        <Calendar />
+        <StashTable />
+        <Chart />
+      </DashboardContext.Provider>
     </div>
   );
 }

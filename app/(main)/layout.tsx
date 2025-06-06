@@ -12,11 +12,11 @@ export default function MainLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex flex-col xl:max-h-full xl:min-h-dvh xl:flex-row">
-      <AuthWrapper>
-        <Navigation />
-        {children}
-      </AuthWrapper>
+    <div>
+      <Navigation />
+      <div className="ml-10">
+        <AuthWrapper>{children}</AuthWrapper>
+      </div>
     </div>
   );
 }
