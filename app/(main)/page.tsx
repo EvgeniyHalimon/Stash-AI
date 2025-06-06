@@ -1,5 +1,11 @@
 'use client';
-import { Calendar, StashTable, Chart } from '@/components';
+import {
+  Calendar,
+  StashTable,
+  ChartByEachSpending,
+  ChartByEachCategory,
+  ChartByEachProductRemainingToBePostponed,
+} from '@/components';
 import { IGoods } from '@/shared';
 import DashboardContext from '@/shared/DashboardContext';
 import { fetchWithAuth } from '@/shared/fetchWithAuth';
@@ -32,8 +38,8 @@ export default function Home() {
   });
 
   useEffect(() => {
-    if (data.goods) {
-      setGoods(data.goods);
+    if (data?.goods) {
+      setGoods(data?.goods);
     }
   }, [data, isLoading, isFetching]);
 
@@ -48,9 +54,13 @@ export default function Home() {
   return (
     <div className="flex w-full flex-wrap gap-4 p-4">
       <DashboardContext.Provider value={DashboardContextValue}>
-        <Calendar />
         <StashTable />
-        <Chart />
+        <div className="flex flex-wrap justify-center gap-4">
+          <ChartByEachSpending />
+          <ChartByEachCategory />
+          <ChartByEachProductRemainingToBePostponed />
+        </div>
+        <Calendar />
       </DashboardContext.Provider>
     </div>
   );
