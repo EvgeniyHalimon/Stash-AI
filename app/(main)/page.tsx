@@ -58,13 +58,13 @@ export default function Home() {
     <div className="flex w-full flex-wrap gap-4 p-4">
       <DashboardContext.Provider value={dashboardContext}>
         <MonthPicker />
-        <StashTable />
+        <Calendar />
         <div className="flex flex-wrap justify-center gap-4">
           <ChartByEachSpending />
           <ChartByEachCategory />
           <ChartByEachProductRemainingToBePostponed />
         </div>
-        <Calendar />
+        <StashTable />
       </DashboardContext.Provider>
     </div>
   );

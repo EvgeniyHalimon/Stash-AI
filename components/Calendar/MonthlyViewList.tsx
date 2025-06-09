@@ -3,6 +3,7 @@ import { useContext, Fragment } from 'react';
 import Day from './Day';
 import { useDate } from './hooks/useDate';
 import CalendarContext from './CalendarContext';
+import DashboardContext from '@/shared/DashboardContext';
 
 interface IDays {
   shortName: string;
@@ -25,9 +26,25 @@ export interface IDaysTypes {
   dayNum: number | string;
 }
 
+function groupByDate(goods: any[]) {
+  const map = new Map<string, number>();
+
+  goods.forEach(item => {
+    const dateObj = new Date(item.whenWillItEnd);
+    const localDate = `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${String(dateObj.getDate()).padStart(2, '0')}`;
+
+    map.set(localDate, (map.get(localDate) || 0) + 1);
+  });
+
+  return map;
+}
+
 export const MonthlyViewList = () => {
   const { number } = useContext(CalendarContext);
   const { days } = useDate(number);
+  const { goods } = useContext(DashboardContext);
+
+  const groupedGoods = groupByDate(goods);
 
   return (
     <div className="flex flex-col">
@@ -42,15 +59,19 @@ export const MonthlyViewList = () => {
         ))}
       </div>
       <div className="grid grid-cols-7">
-        {days.map((day: IDaysTypes) => (
-          <Fragment key={JSON.stringify(day)}>
-            {day.value === 'padding' ? (
-              <Day date={day} cardClass="bg-gray-300" />
-            ) : (
-              <Day date={day} cardClass="bg-white" />
-            )}
-          </Fragment>
-        ))}
+        {days.map((day: IDaysTypes) => {
+          const count = groupedGoods.get(day.date) || 0;
+
+          return (
+            <Fragment key={JSON.stringify(day)}>
+              {day.value === 'padding' ? (
+                <Day date={day} cardClass="bg-gray-300" countOfProducts={0} />
+              ) : (
+                <Day date={day} cardClass="bg-white" countOfProducts={count} />
+              )}
+            </Fragment>
+          );
+        })}
       </div>
     </div>
   );

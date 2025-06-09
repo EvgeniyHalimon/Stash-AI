@@ -2,6 +2,7 @@
 
 import { useContext, useEffect, useState } from 'react';
 import CalendarContext from '../CalendarContext';
+import { formatLocalDate } from '@/shared';
 
 interface Day {
   dayNum: number;
@@ -53,27 +54,32 @@ export const useDate = (nav: number) => {
         month === today.getMonth() &&
         year === today.getFullYear();
 
+      let dateObj: Date;
+
       if (dayNum < 1) {
         // Дни прошлого месяца
+        dateObj = new Date(year, month - 1, daysInPrevMonth + dayNum);
         daysArr.push({
-          dayNum: daysInPrevMonth + dayNum,
+          dayNum: dateObj.getDate(),
           value: 'padding',
-          date: '',
+          date: formatLocalDate(dateObj),
         });
       } else if (dayNum > daysInMonth) {
         // Дни следующего месяца
+        dateObj = new Date(year, month + 1, dayNum - daysInMonth);
         daysArr.push({
-          dayNum: dayNum - daysInMonth,
+          dayNum: dateObj.getDate(),
           value: 'padding',
-          date: '',
+          date: formatLocalDate(dateObj),
         });
       } else {
         // Дни текущего месяца
+        dateObj = new Date(year, month, dayNum);
         daysArr.push({
           dayNum,
           value: dayNum,
           isCurrentDay,
-          date: `${dayNum}/${month + 1}/${year}`,
+          date: formatLocalDate(dateObj),
         });
       }
     }

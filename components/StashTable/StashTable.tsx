@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { TableBody, TableHead } from '..';
 import { fetchWithAuth } from '@/shared/fetchWithAuth';
 import { useContext, useEffect, useState } from 'react';
-import { IGoods, Params, SortType } from '@/shared';
+import { formatLocalDate, IGoods, Params, SortType } from '@/shared';
 import Pagination from './Pagination';
 import { usePathname } from 'next/navigation';
 import CalendarContext from '../Calendar/CalendarContext';
@@ -23,7 +23,7 @@ async function fetchGoods(params: Params = {}) {
 }
 
 export const StashTable = () => {
-  const p = usePathname();
+  const pathname = usePathname();
   const [sort, setSort] = useState<SortType>('desc');
   const [sortBy, setSortBy] = useState('title');
   const [goods, setGoods] = useState<IGoods[]>([]);
@@ -33,11 +33,11 @@ export const StashTable = () => {
   const { month, year } = useContext(CalendarContext);
 
   const d = new Date(year, month, 1);
-  const date = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  const date = formatLocalDate(d);
 
   const queryParams = {
     page,
-    limit: p === '/list' ? 12 : 8,
+    limit: pathname === '/list' ? 12 : 8,
     sortBy,
     sort,
     date,
@@ -61,7 +61,7 @@ export const StashTable = () => {
   return (
     <div className="h-fit w-full overflow-x-auto shadow-md">
       <table
-        className={`w-full text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400 ${p === '/list' ? 'mb-4' : 'mb-0'}`}
+        className={`w-full text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400 ${pathname === '/list' ? 'mb-4' : 'mb-0'}`}
       >
         <TableHead
           sort={sort}
@@ -71,7 +71,7 @@ export const StashTable = () => {
         />
         <TableBody goods={goods} />
       </table>
-      {p === '/list' && (
+      {pathname === '/list' && (
         <Pagination
           page={page}
           count={Math.ceil(count / queryParams.limit)}
