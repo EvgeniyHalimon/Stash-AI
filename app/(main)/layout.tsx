@@ -1,22 +1,22 @@
-import type { Metadata } from 'next';
+'use client';
 import { AuthWrapper, Navigation } from '@/components';
-
-export const metadata: Metadata = {
-  title: 'Assistant',
-  description: 'Assistant',
-};
+import CalendarContext from '@/components/Calendar/CalendarContext';
+import { useCalendarContext } from '@/shared';
 
 export default function MainLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const calendarContext = useCalendarContext();
   return (
     <div>
-      <Navigation />
-      <div className="ml-10">
-        <AuthWrapper>{children}</AuthWrapper>
-      </div>
+      <CalendarContext.Provider value={calendarContext}>
+        <Navigation />
+        <div className="ml-10">
+          <AuthWrapper>{children}</AuthWrapper>
+        </div>
+      </CalendarContext.Provider>
     </div>
   );
 }

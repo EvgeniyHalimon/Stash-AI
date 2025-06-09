@@ -3,10 +3,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { TableBody, TableHead } from '..';
 import { fetchWithAuth } from '@/shared/fetchWithAuth';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { IGoods, Params, SortType } from '@/shared';
 import Pagination from './Pagination';
 import { usePathname } from 'next/navigation';
+import CalendarContext from '../Calendar/CalendarContext';
 
 async function fetchGoods(params: Params = {}) {
   const query = new URLSearchParams(
@@ -29,11 +30,17 @@ export const StashTable = () => {
   const [page, setPage] = useState<number>(1);
   const [count, setCount] = useState<number>(1);
 
+  const { month, year } = useContext(CalendarContext);
+
+  const d = new Date(year, month, 1);
+  const date = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
   const queryParams = {
     page,
     limit: p === '/list' ? 12 : 8,
     sortBy,
     sort,
+    date,
   };
 
   const { data, isLoading } = useQuery({

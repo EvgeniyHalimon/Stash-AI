@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 
-import AppContext from './Context';
+import CalendarContext from './CalendarContext';
 import { LeftIcon, RightIcon } from '..';
 
 export const MonthPicker = () => {
-  const { month, setMonth, year, setYear } = useContext(AppContext);
+  const { month, setMonth, year, setYear } = useContext(CalendarContext);
   const months = [
     'January',
     'February',
@@ -41,20 +41,20 @@ export const MonthPicker = () => {
   };
 
   return (
-    <div className="flex items-center bg-white">
+    <div className="flex items-center">
       <button
         type="button"
-        className="cursor-pointer text-black"
+        className="cursor-pointer text-white"
         onClick={() => goBackward()}
       >
         <LeftIcon />
       </button>
-      <p className="text-xl font-bold text-black">
+      <p className="text-xl font-bold text-white">
         {months[month].toUpperCase()} {year}
       </p>
       <button
         type="button"
-        className="cursor-pointer text-black"
+        className="cursor-pointer text-white"
         onClick={() => goForward()}
       >
         <RightIcon />

@@ -1,5 +1,5 @@
 export * from './Calendar';
-export * from './Context';
+export * from './CalendarContext';
 export * from './Day';
 export * from './MonthPicker';
 export * from './MonthlyViewList';

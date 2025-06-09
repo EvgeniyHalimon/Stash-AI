@@ -1,7 +1,7 @@
 'use client';
 
 import { useContext, useEffect, useState } from 'react';
-import AppContext from '../Context';
+import CalendarContext from '../CalendarContext';
 
 interface Day {
   dayNum: number;
@@ -13,7 +13,7 @@ interface Day {
 export const useDate = (nav: number) => {
   const [dateDisplay, setDateDisplay] = useState('');
   const [days, setDays] = useState<Day[]>([]);
-  const { month, year } = useContext(AppContext);
+  const { month, year } = useContext(CalendarContext);
 
   useEffect(() => {
     const weekdays = [

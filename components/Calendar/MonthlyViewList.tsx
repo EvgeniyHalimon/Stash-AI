@@ -2,7 +2,7 @@ import { useContext, Fragment } from 'react';
 
 import Day from './Day';
 import { useDate } from './hooks/useDate';
-import AppContext from './Context';
+import CalendarContext from './CalendarContext';
 
 interface IDays {
   shortName: string;
@@ -26,7 +26,7 @@ export interface IDaysTypes {
 }
 
 export const MonthlyViewList = () => {
-  const { number } = useContext(AppContext);
+  const { number } = useContext(CalendarContext);
   const { days } = useDate(number);
 
   return (

@@ -2,7 +2,7 @@
 
 import { createContext } from 'react';
 
-export interface IAppContext {
+export interface ICalendarContext {
   month: number;
   setMonth: (value: number) => void;
   year: number;
@@ -11,7 +11,7 @@ export interface IAppContext {
   setNumber: (value: number) => void;
 }
 
-const initialState: IAppContext = {
+const initialState: ICalendarContext = {
   month: 0,
   setMonth: val => val,
   year: 0,
@@ -20,6 +20,6 @@ const initialState: IAppContext = {
   setNumber: val => val,
 };
 
-const AppContext = createContext<IAppContext>(initialState);
+const CalendarContext = createContext<ICalendarContext>(initialState);
 
-export default AppContext;
+export default CalendarContext;
