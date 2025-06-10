@@ -5,3 +5,4 @@ export * from './Icons';
 export * from './Navigation';
 export * from './StashTable';
 export * from './Wrappers';
+export * from './FormInput';

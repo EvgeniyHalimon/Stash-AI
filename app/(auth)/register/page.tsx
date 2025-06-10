@@ -5,6 +5,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
+import Link from 'next/link';
+import { FormInput } from '@/components';
 
 const schema = yup
   .object({
@@ -27,10 +29,6 @@ const schema = yup
     password: yup
       .string()
       .min(8, 'Password must be at least 8 characters')
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-        'Password must contain at least one uppercase letter, one lowercase letter and one number',
-      )
       .required('Password is required'),
     confirmPassword: yup
       .string()
@@ -65,40 +63,60 @@ export default function Register() {
 
   const { isPending, mutate } = useMutation({
     mutationFn: signUp,
-    onSuccess: () => {
-      router.replace('/');
-    },
-    onError: (error: unknown) => {
-      console.error('Login failed:', error);
-    },
+    onSuccess: () => router.replace('/'),
+    onError: (error: unknown) => console.error('Login failed:', error),
   });
 
-  const onSubmit = (data: FormData) => {
-    mutate(data);
-  };
+  const onSubmit = (data: FormData) => mutate(data);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input {...register('firstName')} type="text" placeholder="First Name" />
-      <p>{errors.firstName?.message}</p>
-
-      <input {...register('lastName')} type="text" placeholder="Last Name" />
-      <p>{errors.lastName?.message}</p>
-
-      <input {...register('email')} type="email" placeholder="Email" />
-      <p>{errors.email?.message}</p>
-
-      <input {...register('password')} type="password" placeholder="Password" />
-      <p>{errors.password?.message}</p>
-
-      <input
-        {...register('confirmPassword')}
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
+      <FormInput
+        label="First Name"
+        type="text"
+        placeholder="First name"
+        error={errors.firstName?.message}
+        registration={register('firstName')}
+      />
+      <FormInput
+        label="Last Name"
+        type="text"
+        placeholder="Last Name"
+        error={errors.lastName?.message}
+        registration={register('lastName')}
+      />
+      <FormInput
+        label="Email"
+        type="email"
+        placeholder="Email"
+        error={errors.email?.message}
+        registration={register('email')}
+      />
+      <FormInput
+        label="Password"
+        type="password"
+        placeholder="Password"
+        error={errors.password?.message}
+        registration={register('password')}
+      />
+      <FormInput
+        label="Confirm Password"
         type="password"
         placeholder="Confirm Password"
+        error={errors.confirmPassword?.message}
+        registration={register('confirmPassword')}
       />
-      <p>{errors.confirmPassword?.message}</p>
 
-      <input type="submit" value="Register" disabled={isPending} />
+      <button
+        className="cursor-pointer self-start rounded-xs bg-blue-500 px-4 py-2 text-white"
+        type="submit"
+        disabled={isPending}
+      >
+        Register
+      </button>
+      <Link className="text-blue-400 underline" href="/login">
+        Already have an account?
+      </Link>
     </form>
   );
 }
