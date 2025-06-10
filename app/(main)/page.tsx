@@ -55,16 +55,22 @@ export default function Home() {
   );
 
   return (
-    <div className="flex w-full flex-wrap gap-4 p-4">
+    <div className="flex w-full flex-col flex-wrap gap-4 p-4">
       <DashboardContext.Provider value={dashboardContext}>
         <MonthPicker />
-        <Calendar />
+        <div className="flex flex-col gap-4 2xl:flex-row">
+          <div className="w-full 2xl:w-1/2">
+            <Calendar />
+          </div>
+          <div className="w-full 2xl:w-1/2">
+            <StashTable />
+          </div>
+        </div>
         <div className="flex flex-wrap justify-center gap-4">
           <ChartByEachSpending />
           <ChartByEachCategory />
           <ChartByEachProductRemainingToBePostponed />
         </div>
-        <StashTable />
       </DashboardContext.Provider>
     </div>
   );

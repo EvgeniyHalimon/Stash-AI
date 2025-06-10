@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getUserFromLocalStorage } from '@/shared/tokenUtils';
+import { Loading } from '../Loading';
 
 export const AuthWrapper = ({
   children,
@@ -23,7 +24,7 @@ export const AuthWrapper = ({
   }, [router]);
 
   if (!isAuthorized) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return <>{children}</>;

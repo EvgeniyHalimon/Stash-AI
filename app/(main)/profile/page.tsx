@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { FormInput } from '@/components';
+import { FormInput, Loading } from '@/components';
 import { useMutation } from '@tanstack/react-query';
 
 interface EditUserForm {
@@ -130,7 +130,7 @@ export default function Profile() {
   };
 
   if (!user) {
-    return <div className="p-4">Loading...</div>;
+    return <Loading />;
   }
 
   return (
