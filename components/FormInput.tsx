@@ -28,7 +28,7 @@ export const FormInput = ({
             {...registration}
             {...props}
             type={isPassword && showPassword ? 'text' : props.type}
-            className={`mt-1 w-full rounded border p-2 pr-10 ${
+            className={`mt-1 w-full rounded border p-2 pr-10 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none ${
               error ? 'border-red-500' : 'border-gray-300'
             }`}
           />
