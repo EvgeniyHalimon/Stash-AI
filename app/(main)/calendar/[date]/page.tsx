@@ -21,7 +21,7 @@ async function fetchGoods(params: Partial<IGoodsParams>) {
 
   const res = await fetchWithAuth(url);
   if (!res.ok) {
-    throw new Error('Failed to fetch posts');
+    throw new Error('Failed to fetch goods');
   }
   return res.json();
 }
@@ -42,7 +42,7 @@ const DayPage = () => {
     range: RangeEnum.DAY,
   };
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ['goods', queryParams],
     queryFn: () => fetchGoods(queryParams),
     staleTime: 1000 * 60 * 10,
@@ -66,7 +66,7 @@ const DayPage = () => {
           setSort={setSort}
           setSortBy={setSortBy}
         />
-        <TableBody goods={goods} />
+        <TableBody goods={goods} refetch={refetch} />
       </table>
 
       <Pagination

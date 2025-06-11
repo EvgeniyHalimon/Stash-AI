@@ -8,6 +8,7 @@ import { formatLocalDate, IGoods, IGoodsParams, SortType } from '@/shared';
 import Pagination from './Pagination';
 import { usePathname } from 'next/navigation';
 import CalendarContext from '../Calendar/CalendarContext';
+import DashboardContext from '@/shared/DashboardContext';
 
 async function fetchGoods(params: Partial<IGoodsParams>) {
   const query = new URLSearchParams(
@@ -17,13 +18,14 @@ async function fetchGoods(params: Partial<IGoodsParams>) {
 
   const res = await fetchWithAuth(url);
   if (!res.ok) {
-    throw new Error('Failed to fetch posts');
+    throw new Error('Failed to fetch goods');
   }
   return res.json();
 }
 
 export const StashTable = () => {
   const pathname = usePathname();
+  const { refetch: dashboardRefetch } = useContext(DashboardContext);
   const [sort, setSort] = useState<SortType>('desc');
   const [sortBy, setSortBy] = useState('title');
   const [goods, setGoods] = useState<IGoods[]>([]);
@@ -43,7 +45,7 @@ export const StashTable = () => {
     date,
   };
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ['goods', queryParams],
     queryFn: () => fetchGoods(queryParams),
     staleTime: 1000 * 60 * 10,
@@ -58,6 +60,11 @@ export const StashTable = () => {
     }
   }, [data?.count, data?.goods, isLoading]);
 
+  const globalRefetch = () => {
+    refetch();
+    dashboardRefetch();
+  };
+
   return (
     <div className="h-fit w-full overflow-x-auto shadow-md">
       <table
@@ -69,7 +76,7 @@ export const StashTable = () => {
           setSort={setSort}
           setSortBy={setSortBy}
         />
-        <TableBody goods={goods} />
+        <TableBody goods={goods} refetch={globalRefetch} />
       </table>
       {pathname === '/list' && (
         <Pagination

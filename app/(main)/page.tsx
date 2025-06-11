@@ -22,7 +22,7 @@ async function fetchGoods(params: { date: string }) {
 
   const res = await fetchWithAuth(url);
   if (!res.ok) {
-    throw new Error('Failed to fetch posts');
+    throw new Error('Failed to fetch goods');
   }
   return res.json();
 }
@@ -32,7 +32,8 @@ export default function Home() {
   const { month, year } = useContext(CalendarContext);
   const d = new Date(year, month, 1);
   const date = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-  const { data, isLoading, isFetching } = useQuery({
+
+  const { data, isLoading, isFetching, refetch } = useQuery({
     queryKey: ['goods-by-user', date],
     queryFn: () => fetchGoods({ date }),
     staleTime: 1000 * 60 * 10,
@@ -50,8 +51,9 @@ export default function Home() {
     () => ({
       goods,
       setGoods,
+      refetch,
     }),
-    [goods],
+    [goods, refetch, isFetching],
   );
 
   return (
