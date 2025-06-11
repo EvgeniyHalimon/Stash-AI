@@ -1,6 +1,10 @@
+'use client';
+
+import { useState } from 'react';
 import { fetchWithAuth, formatDate, getQueryClient, IGoods } from '@/shared';
 import { TableData, TableRow } from '..';
 import { useMutation } from '@tanstack/react-query';
+import { EditGoodModal, EditGoodsForm } from './EditGoodModal';
 
 export const TableBody = ({
   goods,
@@ -10,13 +14,17 @@ export const TableBody = ({
   refetch: () => void;
 }) => {
   const qc = getQueryClient();
+  const [editingGood, setEditingGood] = useState<Partial<IGoods> | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const deleteGood = async (id: string) => {
     await fetchWithAuth(`${process.env.NEXT_PUBLIC_API_URL}/goods/${id}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
     });
   };
-  const { mutate } = useMutation({
+
+  const { mutate: deleteMutate } = useMutation({
     mutationFn: deleteGood,
     onError: error => console.error('Delete failed:', error),
     onSuccess: () => {
@@ -28,43 +36,129 @@ export const TableBody = ({
     },
   });
 
+  const updateGood = async ({
+    id,
+    data,
+  }: {
+    id: string;
+    data: EditGoodsForm;
+  }) => {
+    await fetchWithAuth(`${process.env.NEXT_PUBLIC_API_URL}/goods/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+  };
+
+  const { mutate: updateMutate, isPending: isUpdatePending } = useMutation({
+    mutationFn: updateGood,
+    onError: error => console.error('Update failed:', error),
+    onSuccess: () => {
+      qc.invalidateQueries({
+        queryKey: ['goods', 'goods-by-user'],
+        exact: false,
+      });
+      refetch();
+      setIsModalOpen(false);
+      setEditingGood(null);
+    },
+  });
+
+  const handleEdit = (good: Partial<IGoods>) => {
+    setEditingGood(good);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditingGood(null);
+  };
+
+  const handleSubmit = (data: EditGoodsForm) => {
+    if (editingGood) {
+      updateMutate({ id: String(editingGood._id), data });
+    }
+  };
+
+  const getInitialValues = (good: Partial<IGoods>): EditGoodsForm => ({
+    title: good.title,
+    price: good.price,
+    category: good.category,
+    postponed: good.postponed,
+    whenWillItEnd: good.whenWillItEnd,
+  });
+
   return (
-    <tbody>
-      {goods.map(
-        ({
-          _id,
-          title,
-          price,
-          category,
-          postponed,
-          remainingToBePostponed,
-          whenWillItEnd,
-        }) => (
-          <TableRow
-            key={_id}
-            className="border-b border-gray-200 bg-gray-800 transition-all duration-500 hover:bg-gray-900 dark:border-gray-700"
-          >
-            <th
-              scope="row"
-              className="px-4 py-4 font-medium whitespace-nowrap text-gray-900 dark:text-white"
+    <>
+      <tbody>
+        {goods.map(
+          ({
+            _id,
+            title,
+            price,
+            category,
+            postponed,
+            remainingToBePostponed,
+            whenWillItEnd,
+          }) => (
+            <TableRow
+              key={_id}
+              className="border-b border-gray-200 bg-gray-800 transition-all duration-500 hover:bg-gray-900 dark:border-gray-700"
             >
-              {title}
-            </th>
-            <TableData className="px-4 py-4">{price}</TableData>
-            <TableData className="px-4 py-4">{category}</TableData>
-            <TableData className="px-4 py-4">{postponed}</TableData>
-            <TableData className="px-4 py-4">
-              {remainingToBePostponed}
-            </TableData>
-            <TableData className="px-4 py-4">
-              {formatDate(whenWillItEnd)}
-            </TableData>
-            <TableData className="px-4 py-4" onClick={() => mutate(_id)}>
-              Edit / Delete
-            </TableData>
-          </TableRow>
-        ),
+              <th
+                scope="row"
+                className="px-4 py-4 font-medium whitespace-nowrap text-gray-900 dark:text-white"
+              >
+                {title}
+              </th>
+              <TableData className="px-4 py-4">{price}</TableData>
+              <TableData className="px-4 py-4">{category}</TableData>
+              <TableData className="px-4 py-4">{postponed}</TableData>
+              <TableData className="px-4 py-4">
+                {remainingToBePostponed}
+              </TableData>
+              <TableData className="px-4 py-4">
+                {formatDate(whenWillItEnd)}
+              </TableData>
+              <TableData className="px-4 py-4">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() =>
+                      handleEdit({
+                        _id,
+                        title,
+                        price,
+                        category,
+                        postponed,
+                        whenWillItEnd,
+                      })
+                    }
+                    className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                  >
+                    Edit
+                  </button>
+                  <span className="text-gray-400">|</span>
+                  <button
+                    onClick={() => deleteMutate(_id)}
+                    className="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </TableData>
+            </TableRow>
+          ),
+        )}
+      </tbody>
+
+      {isModalOpen && editingGood && (
+        <EditGoodModal
+          initialValues={getInitialValues(editingGood)}
+          onClose={handleCloseModal}
+          onSubmit={handleSubmit}
+          isPending={isUpdatePending}
+        />
       )}
-    </tbody>
+    </>
   );
 };
