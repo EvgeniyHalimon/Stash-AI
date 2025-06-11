@@ -41,11 +41,20 @@ export interface IGoods {
   updatedAt: Date;
 }
 
-export interface Params {
-  page?: number;
-  limit?: number;
-  sortBy?: string;
-  sort?: SortType;
+export interface IGoodsParams {
+  page: number;
+  limit: number;
+  sortBy: string;
+  sort: SortType;
+  date: Date | string;
+  range: RangeType;
 }
+
+export enum RangeEnum {
+  DAY = 'day',
+  MONTH = 'month',
+}
+
+export type RangeType = RangeEnum.DAY | RangeEnum.MONTH;
 
 export type SortType = 'asc' | 'desc';

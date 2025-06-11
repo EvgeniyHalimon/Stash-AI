@@ -2,12 +2,18 @@
 
 import { TableHead, TableBody } from '@/components';
 import Pagination from '@/components/StashTable/Pagination';
-import { fetchWithAuth, IGoods, SortType } from '@/shared';
+import {
+  fetchWithAuth,
+  IGoods,
+  IGoodsParams,
+  RangeEnum,
+  SortType,
+} from '@/shared';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-async function fetchGoods(params: any) {
+async function fetchGoods(params: Partial<IGoodsParams>) {
   const query = new URLSearchParams(
     params as Record<string, string>,
   ).toString();
@@ -27,12 +33,13 @@ const DayPage = () => {
   const [page, setPage] = useState<number>(1);
   const [goods, setGoods] = useState<IGoods[]>([]);
   const [count, setCount] = useState<number>(1);
+
   const queryParams = {
     sortBy: 'price',
     limit: 15,
-    sort: 'asc',
-    date,
-    range: 'day',
+    sort,
+    date: date as string,
+    range: RangeEnum.DAY,
   };
 
   const { data, isLoading } = useQuery({

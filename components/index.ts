@@ -7,3 +7,4 @@ export * from './StashTable';
 export * from './Wrappers';
 export * from './FormInput';
 export * from './Loading';
+export * from './Profile';

@@ -4,12 +4,12 @@ import { useQuery } from '@tanstack/react-query';
 import { TableBody, TableHead } from '..';
 import { fetchWithAuth } from '@/shared/fetchWithAuth';
 import { useContext, useEffect, useState } from 'react';
-import { formatLocalDate, IGoods, Params, SortType } from '@/shared';
+import { formatLocalDate, IGoods, IGoodsParams, SortType } from '@/shared';
 import Pagination from './Pagination';
 import { usePathname } from 'next/navigation';
 import CalendarContext from '../Calendar/CalendarContext';
 
-async function fetchGoods(params: Params = {}) {
+async function fetchGoods(params: Partial<IGoodsParams>) {
   const query = new URLSearchParams(
     params as Record<string, string>,
   ).toString();
