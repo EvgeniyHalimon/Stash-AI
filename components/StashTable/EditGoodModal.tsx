@@ -44,12 +44,14 @@ interface IEditGoodsModalProps {
   isPending: boolean;
 }
 
-const prepareInitialValues = (values: EditGoodsForm): EditGoodsForm => {
+const prepareInitialValues = (values: EditGoodsForm) => {
   return {
     ...values,
     whenWillItEnd: formatDateForInput(values.whenWillItEnd as string | Date),
   };
 };
+
+type FormData = yup.InferType<typeof schema>;
 
 export const EditGoodModal = ({
   initialValues,
@@ -64,8 +66,8 @@ export const EditGoodModal = ({
     handleSubmit,
     control,
     formState: { errors, isSubmitting },
-  } = useForm<EditGoodsForm>({
-    resolver: yupResolver(schema) as any,
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
     defaultValues: preparedInitialValues,
   });
 
