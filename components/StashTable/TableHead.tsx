@@ -21,10 +21,10 @@ export const TableHead = ({
     { title: 'whenWillItEnd', label: 'End' },
   ];
   return (
-    <thead className="bg-gray-50 text-xs text-gray-700 uppercase dark:bg-gray-700 dark:text-gray-400">
+    <thead className="table-head">
       <TableRow>
         {tableHead.map(({ title, label }) => (
-          <TableHeader scope="col" className="px-4 py-3" key={title}>
+          <TableHeader scope="col" className="table-head-cell" key={title}>
             <div className="flex items-center gap-1">
               {label}
               <button
@@ -32,7 +32,7 @@ export const TableHead = ({
                   setSortBy(title);
                   setSort(sort === 'asc' ? 'desc' : 'asc');
                 }}
-                className={`origin-center cursor-pointer transition-transform duration-300 ease-in-out will-change-transform ${
+                className={`table-sort-button ${
                   sortBy === title && sort === 'asc' ? 'rotate-180' : ''
                 }`}
               >

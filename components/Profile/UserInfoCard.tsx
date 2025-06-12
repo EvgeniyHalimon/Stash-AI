@@ -2,13 +2,17 @@
 
 import { IUser } from '@/shared';
 
-interface UserInfoCardProps {
+interface IUserInfoCardProps {
   user: IUser;
   onEdit: () => void;
   onLogout: () => void;
 }
 
-export const UserInfoCard = ({ user, onEdit, onLogout }: UserInfoCardProps) => {
+export const UserInfoCard = ({
+  user,
+  onEdit,
+  onLogout,
+}: IUserInfoCardProps) => {
   return (
     <div className="flex w-full justify-between p-4">
       <div className="space-y-2">

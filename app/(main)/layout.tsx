@@ -13,7 +13,7 @@ export default function MainLayout({
     <div>
       <CalendarContext.Provider value={calendarContext}>
         <Navigation />
-        <div className="ml-10">
+        <div className="dashboard-layout-section">
           <AuthWrapper>{children}</AuthWrapper>
         </div>
       </CalendarContext.Provider>

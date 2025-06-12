@@ -13,3 +13,9 @@ export const formatDate = (isoString: Date): string => {
 export const formatLocalDate = (date: Date): string => {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 };
+
+export const formatDateForInput = (dateString: string | Date): string => {
+  const date = new Date(dateString);
+
+  return date.toISOString().split('T')[0];
+};

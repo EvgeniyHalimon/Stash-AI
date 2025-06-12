@@ -8,7 +8,7 @@ import {
   MonthPicker,
 } from '@/components';
 import CalendarContext from '@/components/Calendar/CalendarContext';
-import { IGoods } from '@/shared';
+import { formatLocalDate, IGoods } from '@/shared';
 import DashboardContext from '@/shared/DashboardContext';
 import { fetchWithAuth } from '@/shared/fetchWithAuth';
 import { useQuery } from '@tanstack/react-query';
@@ -31,7 +31,7 @@ export default function Home() {
   const [goods, setGoods] = useState<IGoods[]>([]);
   const { month, year } = useContext(CalendarContext);
   const d = new Date(year, month, 1);
-  const date = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  const date = formatLocalDate(d);
 
   const { data, isLoading, isFetching, refetch } = useQuery({
     queryKey: ['goods-by-user', date],
@@ -57,18 +57,18 @@ export default function Home() {
   );
 
   return (
-    <div className="flex w-full flex-col flex-wrap gap-4 p-4">
+    <div className="home-wrapper">
       <DashboardContext.Provider value={dashboardContext}>
         <MonthPicker />
-        <div className="flex flex-col gap-4 2xl:flex-row">
-          <div className="w-full 2xl:w-1/2">
+        <div className="data-block">
+          <div className="sub-block">
             <Calendar />
           </div>
-          <div className="w-full 2xl:w-1/2">
+          <div className="sub-block">
             <StashTable />
           </div>
         </div>
-        <div className="flex flex-wrap justify-center gap-4">
+        <div className="chart-block">
           <ChartByEachSpending />
           <ChartByEachCategory />
           <ChartByEachProductRemainingToBePostponed />

@@ -58,8 +58,8 @@ const DayPage = () => {
   }, [data?.count, data?.goods, isLoading]);
 
   return (
-    <div className="h-fit w-full overflow-x-auto p-4 shadow-md">
-      <table className="mb-4 w-full text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400">
+    <div className="day-page-wrapper">
+      <table className="table-base mb-4">
         <TableHead
           sort={sort}
           sortBy={sortBy}

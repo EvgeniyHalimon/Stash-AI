@@ -64,13 +64,12 @@ export default function Register() {
   const { isPending, mutate } = useMutation({
     mutationFn: signUp,
     onSuccess: () => router.replace('/'),
-    onError: (error: unknown) => console.error('Login failed:', error),
   });
 
   const onSubmit = (data: FormData) => mutate(data);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
+    <form onSubmit={handleSubmit(onSubmit)} className="auth-form">
       <FormInput
         label="First Name"
         type="text"
@@ -107,14 +106,10 @@ export default function Register() {
         registration={register('confirmPassword')}
       />
 
-      <button
-        className="cursor-pointer self-start rounded-xs bg-blue-500 px-4 py-2 text-white"
-        type="submit"
-        disabled={isPending}
-      >
+      <button className="auth-submit-button" type="submit" disabled={isPending}>
         Register
       </button>
-      <Link className="text-blue-400 underline" href="/login">
+      <Link className="auth-question" href="/login">
         Already have an account?
       </Link>
     </form>

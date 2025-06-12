@@ -76,7 +76,7 @@ export const ChartByEachSpending = () => {
   };
 
   return (
-    <div className="h-fit bg-white p-4">
+    <div className="chart-wrapper">
       <Doughnut height={400} width={400} data={chartData} options={options} />
     </div>
   );

@@ -31,25 +31,28 @@ const getRandomColor = () =>
     .toString(16)
     .padStart(6, '0')}`;
 
-export const ChartByEachProductRemainingToBePostponed = () => {
+export const ChartByEachCategory = () => {
   const { goods } = useContext(DashboardContext);
 
   const { chartData, total } = useMemo(() => {
+    const categoryMap = new Map<string, number>();
     let total = 0;
-    const labels = goods.map(g => g.title) ?? [];
-    const data =
-      goods.map(g => {
-        total += g.remainingToBePostponed;
-        return g.remainingToBePostponed;
-      }) ?? [];
-    const backgroundColor = goods.map(() => getRandomColor());
+
+    goods.forEach(({ category, price }) => {
+      total += price;
+      categoryMap.set(category, (categoryMap.get(category) || 0) + price);
+    });
+
+    const labels = Array.from(categoryMap.keys());
+    const data = Array.from(categoryMap.values());
+    const backgroundColor = labels.map(() => getRandomColor());
 
     return {
       chartData: {
         labels,
         datasets: [
           {
-            label: 'Remains to be postponed by product',
+            label: 'Spends by Category',
             data,
             backgroundColor,
             hoverOffset: 4,
@@ -66,7 +69,7 @@ export const ChartByEachProductRemainingToBePostponed = () => {
       legend: { position: 'top' as const },
       title: {
         display: true,
-        text: `Remains to be postponed (Total: ${total})`,
+        text: `Spending by category (Total: ${total})`,
         color: 'black',
       },
     },
@@ -76,7 +79,7 @@ export const ChartByEachProductRemainingToBePostponed = () => {
   };
 
   return (
-    <div className="h-fit bg-white p-4">
+    <div className="chart-wrapper">
       <Doughnut height={400} width={400} data={chartData} options={options} />
     </div>
   );

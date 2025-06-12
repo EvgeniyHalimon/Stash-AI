@@ -20,23 +20,21 @@ export const FormInput = ({
   const isPassword = props.type === 'password';
 
   return (
-    <div className="flex flex-col gap-1">
-      <label className="text-sm font-medium">
+    <div className="form-input-wrapper">
+      <label className="form-input-label">
         {label}
-        <div className="relative flex items-center">
+        <div className="form-input-container">
           <input
             {...registration}
             {...props}
             type={isPassword && showPassword ? 'text' : props.type}
-            className={`mt-1 w-full rounded border p-2 pr-10 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none ${
-              error ? 'border-red-500' : 'border-gray-300'
-            }`}
+            className={`form-input-field ${error ? 'form-input-error' : ''}`}
           />
           {isPassword && (
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute top-1/2 right-2 -translate-y-1/2 cursor-pointer text-gray-600"
+              className="form-password-toggle"
               tabIndex={-1}
             >
               <svg
@@ -54,7 +52,7 @@ export const FormInput = ({
           )}
         </div>
       </label>
-      <p className="min-h-[20px] text-sm text-red-500">{error ?? '\u00A0'}</p>
+      <p className="form-input-error-message">{error ?? '\u00A0'}</p>
     </div>
   );
 };

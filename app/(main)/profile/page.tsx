@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import {
-  EditUserForm,
+  IEditUserForm,
   EditUserModal,
   Loading,
   UserInfoCard,
@@ -20,9 +20,11 @@ export default function Profile() {
   const router = useRouter();
   const [user, setUser] = useState<IUser>();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [initialValues, setInitialValues] = useState<EditUserForm | null>(null);
+  const [initialValues, setInitialValues] = useState<IEditUserForm | null>(
+    null,
+  );
 
-  const patch = async (data: EditUserForm) => {
+  const patch = async (data: IEditUserForm) => {
     const res = await fetchWithAuth(
       `${process.env.NEXT_PUBLIC_API_URL}/users`,
       {
@@ -86,7 +88,7 @@ export default function Profile() {
         <EditUserModal
           initialValues={initialValues}
           onClose={closeEditModal}
-          onSubmit={(data: EditUserForm) => mutate(data)}
+          onSubmit={(data: IEditUserForm) => mutate(data)}
           isPending={isPending}
         />
       )}

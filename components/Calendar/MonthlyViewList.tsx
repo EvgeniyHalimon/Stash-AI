@@ -4,6 +4,7 @@ import Day from './Day';
 import { useDate } from './hooks/useDate';
 import CalendarContext from './CalendarContext';
 import DashboardContext from '@/shared/DashboardContext';
+import { formatLocalDate, IGoods } from '@/shared';
 
 interface IDays {
   shortName: string;
@@ -26,12 +27,12 @@ export interface IDaysTypes {
   dayNum: number | string;
 }
 
-function groupByDate(goods: any[]) {
+function groupByDate(goods: IGoods[]) {
   const map = new Map<string, number>();
 
   goods.forEach(item => {
     const dateObj = new Date(item.whenWillItEnd);
-    const localDate = `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${String(dateObj.getDate()).padStart(2, '0')}`;
+    const localDate = formatLocalDate(dateObj);
 
     map.set(localDate, (map.get(localDate) || 0) + 1);
   });
@@ -48,7 +49,7 @@ export const MonthlyViewList = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="grid grid-cols-7">
+      <div className="grid grid-cols-7 gap-[1px] border-b border-black">
         {daysArr.map((day: IDays) => (
           <p
             key={day.longName}
@@ -58,7 +59,7 @@ export const MonthlyViewList = () => {
           </p>
         ))}
       </div>
-      <div className="grid grid-cols-7">
+      <div className="grid grid-cols-7 gap-[1px]">
         {days.map((day: IDaysTypes) => {
           const count = groupedGoods.get(day.date) || 0;
 

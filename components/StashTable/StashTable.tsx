@@ -67,9 +67,7 @@ export const StashTable = () => {
 
   return (
     <div className="h-fit w-full overflow-x-auto shadow-md">
-      <table
-        className={`w-full text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400 ${pathname === '/list' ? 'mb-4' : 'mb-0'}`}
-      >
+      <table className={`table-base ${pathname === '/list' ? 'mb-4' : 'mb-0'}`}>
         <TableHead
           sort={sort}
           sortBy={sortBy}

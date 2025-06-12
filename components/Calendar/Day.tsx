@@ -9,17 +9,12 @@ interface IDateCard {
 
 const Day = ({ date, cardClass, countOfProducts }: IDateCard) => {
   return (
-    <div
-      className={`shadow-custom flex h-16 w-full flex-col p-2 text-black ${cardClass} `}
-    >
+    <div className={`day ${cardClass} `}>
       <p className="text-lg font-bold">{date.dayNum}</p>
       {countOfProducts === 0 ? (
         <></>
       ) : (
-        <Link
-          href={`/calendar/${date.date}`}
-          className="h-5 w-5 cursor-pointer rounded-full bg-red-700 text-center font-semibold"
-        >
+        <Link href={`/calendar/${date.date}`} className="day-link">
           {countOfProducts}
         </Link>
       )}

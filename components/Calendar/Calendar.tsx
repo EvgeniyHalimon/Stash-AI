@@ -3,7 +3,7 @@ import { MonthlyViewList } from '..';
 
 export const Calendar = () => {
   return (
-    <div className="flex w-full flex-col">
+    <div className="calendar-wrapper">
       <MonthlyViewList />
     </div>
   );

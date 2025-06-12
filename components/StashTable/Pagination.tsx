@@ -42,15 +42,12 @@ const Pagination: React.FC<PaginationProps> = ({
   }, [page, count]);
 
   return (
-    <nav
-      aria-label="Pagination"
-      className="flex justify-center -space-x-px rounded-md bg-black text-amber-500 shadow-sm"
-    >
+    <nav aria-label="Pagination" className="pagination-wrapper">
       <button
         type="button"
         disabled={page === 1}
         onClick={() => onChangePage(1)}
-        className={`inline-flex cursor-pointer items-center rounded-l-md border border-amber-500 px-2 py-2 text-sm font-semibold transition-all duration-500 ${page === 1 ? 'opacity-50' : 'hover:bg-amber-500 hover:text-black'} `}
+        className={`pagination-button rounded-l-md ${page === 1 ? 'pagination-disabled' : ''}`}
       >
         <ChevronLeftFirstIcon />
       </button>
@@ -59,7 +56,7 @@ const Pagination: React.FC<PaginationProps> = ({
         type="button"
         disabled={page === 1}
         onClick={onPrevPage}
-        className={`inline-flex cursor-pointer items-center border border-amber-500 px-2 py-2 text-sm font-semibold transition-all duration-500 ${page === 1 ? 'opacity-50' : 'hover:bg-amber-500 hover:text-black'} `}
+        className={`pagination-button ${page === 1 ? 'pagination-disabled' : ''}`}
       >
         <ChevronLeftIcon />
       </button>
@@ -70,7 +67,7 @@ const Pagination: React.FC<PaginationProps> = ({
           type="button"
           aria-current={page === pageNum ? 'page' : undefined}
           onClick={() => onChangePage(pageNum)}
-          className={`inline-flex cursor-pointer items-center border border-amber-500 px-4 py-2 text-sm font-semibold text-black transition-all duration-500 hover:bg-amber-500 ${page === pageNum ? 'bg-amber-500' : 'bg-amber-700'} `}
+          className={`pagination-page-number ${page === pageNum ? 'pagination-page-active' : 'pagination-page'}`}
         >
           {pageNum}
         </button>
@@ -80,7 +77,7 @@ const Pagination: React.FC<PaginationProps> = ({
         type="button"
         disabled={page === count}
         onClick={onNextPage}
-        className={`inline-flex cursor-pointer items-center border border-amber-500 px-2 py-2 text-sm font-semibold transition-all duration-500 ${page === count ? 'opacity-50' : 'hover:bg-amber-500 hover:text-black'} `}
+        className={`pagination-button ${page === count ? 'pagination-disabled' : ''}`}
       >
         <ChevronRightIcon />
       </button>
@@ -89,7 +86,7 @@ const Pagination: React.FC<PaginationProps> = ({
         type="button"
         disabled={page === count}
         onClick={() => onChangePage(count)}
-        className={`inline-flex cursor-pointer items-center rounded-r-md border border-amber-500 px-2 py-2 text-sm font-semibold transition-all duration-500 ${page === count ? 'opacity-50' : 'hover:bg-amber-500 hover:text-black'} `}
+        className={`pagination-button rounded-r-md ${page === count ? 'pagination-disabled' : ''}`}
       >
         <ChevronRightFirstIcon />
       </button>

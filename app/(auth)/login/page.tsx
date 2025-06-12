@@ -55,7 +55,7 @@ export default function LoginForm() {
   const onSubmit = (data: FormData) => mutate(data);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
+    <form onSubmit={handleSubmit(onSubmit)} className="auth-form">
       <FormInput
         label="Email"
         type="email"
@@ -72,15 +72,11 @@ export default function LoginForm() {
         registration={register('password')}
       />
 
-      <button
-        type="submit"
-        disabled={isPending}
-        className="cursor-pointer self-start rounded-xs bg-blue-500 px-4 py-2 text-white"
-      >
+      <button type="submit" disabled={isPending} className="auth-submit-button">
         Sign in
       </button>
 
-      <Link href="/register" className="text-blue-400 underline">
+      <Link href="/register" className="auth-question">
         Don&#39;t have an account?
       </Link>
     </form>

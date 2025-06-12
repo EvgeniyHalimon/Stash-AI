@@ -1,6 +1,6 @@
 export * from './Calendar';
 export * from './Chat';
-export * from './Chart';
+export * from './Charts';
 export * from './Icons';
 export * from './Navigation';
 export * from './StashTable';
@@ -8,3 +8,4 @@ export * from './Wrappers';
 export * from './FormInput';
 export * from './Loading';
 export * from './Profile';
+export * from './FormButtons';

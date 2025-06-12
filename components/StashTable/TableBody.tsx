@@ -101,27 +101,21 @@ export const TableBody = ({
             remainingToBePostponed,
             whenWillItEnd,
           }) => (
-            <TableRow
-              key={_id}
-              className="border-b border-gray-200 bg-gray-800 transition-all duration-500 hover:bg-gray-900 dark:border-gray-700"
-            >
-              <th
-                scope="row"
-                className="px-4 py-4 font-medium whitespace-nowrap text-gray-900 dark:text-white"
-              >
+            <TableRow key={_id} className="table-body-row">
+              <th scope="row" className="table-body-cell-first">
                 {title}
               </th>
-              <TableData className="px-4 py-4">{price}</TableData>
-              <TableData className="px-4 py-4">{category}</TableData>
-              <TableData className="px-4 py-4">{postponed}</TableData>
-              <TableData className="px-4 py-4">
+              <TableData className="table-body-cell">{price}</TableData>
+              <TableData className="table-body-cell">{category}</TableData>
+              <TableData className="table-body-cell">{postponed}</TableData>
+              <TableData className="table-body-cell">
                 {remainingToBePostponed}
               </TableData>
-              <TableData className="px-4 py-4">
+              <TableData className="table-body-cell">
                 {formatDate(whenWillItEnd)}
               </TableData>
-              <TableData className="px-4 py-4">
-                <div className="flex gap-2">
+              <TableData className="table-body-cell">
+                <div className="table-actions">
                   <button
                     onClick={() =>
                       handleEdit({
@@ -133,14 +127,14 @@ export const TableBody = ({
                         whenWillItEnd,
                       })
                     }
-                    className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                    className="table-edit-button"
                   >
                     Edit
                   </button>
-                  <span className="text-gray-400">|</span>
+                  <span className="table-divider">|</span>
                   <button
                     onClick={() => deleteMutate(_id)}
-                    className="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
+                    className="table-delete-button"
                   >
                     Delete
                   </button>

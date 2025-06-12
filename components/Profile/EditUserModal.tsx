@@ -1,12 +1,11 @@
-// components/EditUserModal.tsx
 'use client';
 
 import { useForm, useWatch } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { FormInput } from '@/components';
+import { FormButtons, FormInput, ModalWrapper } from '@/components';
 
-export interface EditUserForm {
+export interface IEditUserForm {
   firstName: string;
   lastName: string;
   email: string;
@@ -28,10 +27,10 @@ const schema = yup.object({
   email: yup.string().email().required(),
 });
 
-interface EditUserModalProps {
-  initialValues: EditUserForm;
+interface IEditUserModalProps {
+  initialValues: IEditUserForm;
   onClose: () => void;
-  onSubmit: (data: EditUserForm) => void;
+  onSubmit: (data: IEditUserForm) => void;
   isPending: boolean;
 }
 
@@ -40,13 +39,13 @@ export const EditUserModal = ({
   onClose,
   onSubmit,
   isPending,
-}: EditUserModalProps) => {
+}: IEditUserModalProps) => {
   const {
     register,
     handleSubmit,
     control,
     formState: { errors, isSubmitting },
-  } = useForm<EditUserForm>({
+  } = useForm<IEditUserForm>({
     resolver: yupResolver(schema),
     defaultValues: initialValues,
   });
@@ -59,56 +58,36 @@ export const EditUserModal = ({
     watchedFields.email !== initialValues.email;
 
   return (
-    <div className="bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center bg-black text-black">
-      <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-xl font-semibold">Edit Profile</h2>
-          <button onClick={onClose} className="hover:text-gray-400">
-            ✕
-          </button>
-        </div>
+    <ModalWrapper onClose={onClose} title={'Edit Profile'}>
+      <form
+        onSubmit={handleSubmit(data => onSubmit(data))}
+        className="space-y-4"
+      >
+        <FormInput
+          label="First Name"
+          type="text"
+          error={errors.firstName?.message}
+          registration={register('firstName')}
+        />
+        <FormInput
+          label="Last Name"
+          type="text"
+          error={errors.lastName?.message}
+          registration={register('lastName')}
+        />
+        <FormInput
+          label="Email"
+          type="email"
+          error={errors.email?.message}
+          registration={register('email')}
+        />
 
-        <form
-          onSubmit={handleSubmit(data => onSubmit(data))}
-          className="space-y-4"
-        >
-          <FormInput
-            label="First Name"
-            type="text"
-            error={errors.firstName?.message}
-            registration={register('firstName')}
-          />
-          <FormInput
-            label="Last Name"
-            type="text"
-            error={errors.lastName?.message}
-            registration={register('lastName')}
-          />
-          <FormInput
-            label="Email"
-            type="email"
-            error={errors.email?.message}
-            registration={register('email')}
-          />
-
-          <div className="flex gap-3 pt-4">
-            <button
-              type="button"
-              onClick={onClose}
-              className="flex-1 rounded-md border px-4 py-2 hover:bg-gray-50"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={isSubmitting || isPending || !hasChanges}
-              className="flex-1 rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              {isSubmitting || isPending ? 'Saving...' : 'Save Changes'}
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+        <FormButtons
+          onClose={onClose}
+          isDisabled={isSubmitting || isPending || !hasChanges}
+          isSubmitting={isSubmitting || isPending}
+        />
+      </form>
+    </ModalWrapper>
   );
 };
