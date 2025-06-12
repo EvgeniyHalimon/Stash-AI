@@ -64,7 +64,7 @@ body {
     @apply flex min-h-screen flex-col items-center justify-center xl:pt-28 xl:pb-44;
   }
   .dashboard-layout-section {
-    @apply ml-10;
+    @apply ml-12;
   }
   .home-wrapper {
     @apply flex w-full flex-col flex-wrap gap-4 p-4;
@@ -230,5 +230,17 @@ body {
   }
   .logout-button {
     @apply h-9 rounded-md bg-red-500 px-4 py-2 text-white transition hover:bg-red-600;
+  }
+  .stash-table {
+    @apply h-fit w-full overflow-x-auto shadow-md;
+  }
+  .table-block {
+    @apply mb-2 flex items-center justify-between;
+  }
+  .table-title {
+    @apply text-lg font-semibold;
+  }
+  .table-button {
+    @apply cursor-pointer rounded bg-yellow-500 px-3 py-1 text-black hover:bg-yellow-600;
   }
 }

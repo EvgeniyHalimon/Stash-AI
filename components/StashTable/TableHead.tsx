@@ -41,8 +41,8 @@ export const TableHead = ({
             </div>
           </TableHeader>
         ))}
-        <TableHeader scope="col" className="px-6 py-3">
-          Edit / Delete
+        <TableHeader scope="col" className="px-4 py-3">
+          Edit | Delete
         </TableHeader>
       </TableRow>
     </thead>

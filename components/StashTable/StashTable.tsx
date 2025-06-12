@@ -9,6 +9,7 @@ import Pagination from './Pagination';
 import { usePathname } from 'next/navigation';
 import CalendarContext from '../Calendar/CalendarContext';
 import DashboardContext from '@/shared/DashboardContext';
+import { CreateGoodModal } from './CreateGoodModal';
 
 async function fetchGoods(params: Partial<IGoodsParams>) {
   const query = new URLSearchParams(
@@ -31,6 +32,7 @@ export const StashTable = () => {
   const [goods, setGoods] = useState<IGoods[]>([]);
   const [page, setPage] = useState<number>(1);
   const [count, setCount] = useState<number>(1);
+  const [isOpen, setIsOpen] = useState(false);
 
   const { month, year } = useContext(CalendarContext);
 
@@ -66,7 +68,15 @@ export const StashTable = () => {
   };
 
   return (
-    <div className="h-fit w-full overflow-x-auto shadow-md">
+    <div className="stash-table">
+      {pathname === '/list' && (
+        <div className="table-block">
+          <h2 className="table-title">Your Goods</h2>
+          <button onClick={() => setIsOpen(true)} className="table-button">
+            + Add Product
+          </button>
+        </div>
+      )}
       <table className={`table-base ${pathname === '/list' ? 'mb-4' : 'mb-0'}`}>
         <TableHead
           sort={sort}
@@ -84,6 +94,10 @@ export const StashTable = () => {
           onPrevPage={() => setPage(prev => prev - 1)}
           onNextPage={() => setPage(prev => prev + 1)}
         />
+      )}
+
+      {pathname === '/list' && isOpen && (
+        <CreateGoodModal onClose={() => setIsOpen(false)} />
       )}
     </div>
   );

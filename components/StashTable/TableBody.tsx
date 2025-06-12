@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { fetchWithAuth, formatDate, getQueryClient, IGoods } from '@/shared';
 import { TableData, TableRow } from '..';
 import { useMutation } from '@tanstack/react-query';
-import { EditGoodModal, EditGoodsForm } from './EditGoodModal';
+import { EditGoodsForm, EditGoodModal } from './EditGoodModal';
 
 export const TableBody = ({
   goods,
