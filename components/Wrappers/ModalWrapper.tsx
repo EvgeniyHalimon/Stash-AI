@@ -1,15 +1,19 @@
 'use client';
 
 import { ReactNode } from 'react';
+import ReactDOM from 'react-dom';
 
 interface IModalWrapper {
   onClose: () => void;
   children: ReactNode;
   title: string;
 }
-
 export const ModalWrapper = ({ onClose, children, title }: IModalWrapper) => {
-  return (
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  const modalContent = (
     <div className="modal-backdrop">
       <div className="modal-container">
         <div className="modal-header">
@@ -23,4 +27,6 @@ export const ModalWrapper = ({ onClose, children, title }: IModalWrapper) => {
       </div>
     </div>
   );
+
+  return ReactDOM.createPortal(modalContent, document.body);
 };
