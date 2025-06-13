@@ -145,7 +145,7 @@ body {
     @apply relative flex items-center;
   }
   .form-input-field {
-    @apply mt-1 w-full rounded border border-gray-300 p-2 pr-10 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none;
+    @apply mt-1 w-full rounded border border-gray-300 p-2 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none;
   }
   .form-input-error {
     @apply border-red-500;

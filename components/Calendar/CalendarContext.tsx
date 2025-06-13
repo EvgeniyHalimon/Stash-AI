@@ -12,9 +12,9 @@ export interface ICalendarContext {
 }
 
 const initialState: ICalendarContext = {
-  month: 0,
+  month: new Date().getMonth(),
   setMonth: val => val,
-  year: 0,
+  year: new Date().getFullYear(),
   setYear: val => val,
   number: 0,
   setNumber: val => val,

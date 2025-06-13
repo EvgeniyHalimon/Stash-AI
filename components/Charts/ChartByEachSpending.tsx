@@ -58,7 +58,7 @@ export const ChartByEachSpending = () => {
       },
       total,
     };
-  }, [goods]);
+  }, [goods, goods.length]);
 
   const options = {
     responsive: true,
@@ -77,7 +77,13 @@ export const ChartByEachSpending = () => {
 
   return (
     <div className="chart-wrapper">
-      <Doughnut height={400} width={400} data={chartData} options={options} />
+      <Doughnut
+        key={goods.length}
+        height={400}
+        width={400}
+        data={chartData}
+        options={options}
+      />
     </div>
   );
 };

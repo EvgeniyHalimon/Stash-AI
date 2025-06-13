@@ -33,6 +33,7 @@ const getRandomColor = () =>
 
 export const ChartByEachCategory = () => {
   const { goods } = useContext(DashboardContext);
+  console.log('🚀 ~ ChartByEachCategory ~ goods:', goods.length);
 
   const { chartData, total } = useMemo(() => {
     const categoryMap = new Map<string, number>();
@@ -61,7 +62,7 @@ export const ChartByEachCategory = () => {
       },
       total,
     };
-  }, [goods]);
+  }, [goods, goods.length]);
 
   const options = {
     responsive: true,
@@ -80,7 +81,13 @@ export const ChartByEachCategory = () => {
 
   return (
     <div className="chart-wrapper">
-      <Doughnut height={400} width={400} data={chartData} options={options} />
+      <Doughnut
+        key={goods.length}
+        height={400}
+        width={400}
+        data={chartData}
+        options={options}
+      />
     </div>
   );
 };

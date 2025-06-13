@@ -27,6 +27,7 @@ async function fetchGoods(params: Partial<IGoodsParams>) {
 export const StashTable = () => {
   const pathname = usePathname();
   const { refetch: dashboardRefetch } = useContext(DashboardContext);
+
   const [sort, setSort] = useState<SortType>('desc');
   const [sortBy, setSortBy] = useState('title');
   const [goods, setGoods] = useState<IGoods[]>([]);
@@ -41,7 +42,7 @@ export const StashTable = () => {
 
   const queryParams = {
     page,
-    limit: pathname === '/list' ? 12 : 8,
+    limit: 12,
     sortBy,
     sort,
     date,
@@ -97,7 +98,10 @@ export const StashTable = () => {
       )}
 
       {pathname === '/list' && isOpen && (
-        <CreateGoodModal onClose={() => setIsOpen(false)} />
+        <CreateGoodModal
+          onClose={() => setIsOpen(false)}
+          refetch={globalRefetch}
+        />
       )}
     </div>
   );

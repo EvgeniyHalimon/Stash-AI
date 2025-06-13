@@ -5,7 +5,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { FormButtons, FormInput, ModalWrapper } from '@/components';
 import { useMutation } from '@tanstack/react-query';
-import { fetchWithAuth, handleErrorResponse, toastError } from '@/shared';
+import {
+  fetchWithAuth,
+  getQueryClient,
+  handleErrorResponse,
+  toastError,
+} from '@/shared';
 
 const schema = yup.object({
   title: yup
@@ -43,6 +48,7 @@ const schema = yup.object({
 
 interface ICreateGoodsModalProps {
   onClose: () => void;
+  refetch: () => void;
 }
 
 type FormData = yup.InferType<typeof schema>;
@@ -61,7 +67,11 @@ async function createGood(data: FormData) {
   return res;
 }
 
-export const CreateGoodModal = ({ onClose }: ICreateGoodsModalProps) => {
+export const CreateGoodModal = ({
+  onClose,
+  refetch,
+}: ICreateGoodsModalProps) => {
+  const qc = getQueryClient();
   const {
     register,
     handleSubmit,
@@ -72,7 +82,14 @@ export const CreateGoodModal = ({ onClose }: ICreateGoodsModalProps) => {
 
   const { isPending, mutate } = useMutation({
     mutationFn: createGood,
-    onSuccess: () => onClose(),
+    onSuccess: () => {
+      qc.invalidateQueries({
+        queryKey: ['goods', 'goods-by-user'],
+        exact: false,
+      });
+      refetch();
+      onClose();
+    },
     onError: error => {
       toastError(error);
     },
