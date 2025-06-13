@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { FormButtons, FormInput, ModalWrapper } from '@/components';
 import { useMutation } from '@tanstack/react-query';
-import { fetchWithAuth } from '@/shared';
+import { fetchWithAuth, handleErrorResponse, toastError } from '@/shared';
 
 const schema = yup.object({
   title: yup
@@ -54,6 +54,10 @@ async function createGood(data: FormData) {
     body: JSON.stringify(data),
   });
 
+  if (!res.ok) {
+    handleErrorResponse(res);
+  }
+
   return res;
 }
 
@@ -69,7 +73,9 @@ export const CreateGoodModal = ({ onClose }: ICreateGoodsModalProps) => {
   const { isPending, mutate } = useMutation({
     mutationFn: createGood,
     onSuccess: () => onClose(),
-    onError: err => console.error('Login failed:', err),
+    onError: error => {
+      toastError(error);
+    },
   });
 
   const onSubmit = (data: FormData) => mutate(data);

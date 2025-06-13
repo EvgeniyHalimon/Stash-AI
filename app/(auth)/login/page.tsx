@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { saveTokens, saveUserInLocalStorage } from '@/shared/tokenUtils';
 import Link from 'next/link';
 import { FormInput } from '@/components';
+import { handleErrorResponse, toastError } from '@/shared';
 
 const schema = yup.object({
   email: yup
@@ -32,6 +33,10 @@ async function login(data: FormData) {
     saveUserInLocalStorage(user);
   }
 
+  if (!res.ok) {
+    handleErrorResponse(res);
+  }
+
   return res;
 }
 
@@ -49,7 +54,9 @@ export default function LoginForm() {
   const { isPending, mutate } = useMutation({
     mutationFn: login,
     onSuccess: () => router.replace('/'),
-    onError: err => console.error('Login failed:', err),
+    onError: error => {
+      toastError(error);
+    },
   });
 
   const onSubmit = (data: FormData) => mutate(data);

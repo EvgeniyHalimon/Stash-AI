@@ -1,7 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { fetchWithAuth, formatDate, getQueryClient, IGoods } from '@/shared';
+import {
+  fetchWithAuth,
+  formatDate,
+  getQueryClient,
+  handleErrorResponse,
+  IGoods,
+  toastError,
+} from '@/shared';
 import { TableData, TableRow } from '..';
 import { useMutation } from '@tanstack/react-query';
 import { EditGoodsForm, EditGoodModal } from './EditGoodModal';
@@ -18,15 +25,24 @@ export const TableBody = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const deleteGood = async (id: string) => {
-    await fetchWithAuth(`${process.env.NEXT_PUBLIC_API_URL}/goods/${id}`, {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-    });
+    const res = await fetchWithAuth(
+      `${process.env.NEXT_PUBLIC_API_URL}/goods/${id}`,
+      {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+      },
+    );
+
+    if (!res.ok) {
+      handleErrorResponse(res);
+    }
   };
 
   const { mutate: deleteMutate } = useMutation({
     mutationFn: deleteGood,
-    onError: error => console.error('Delete failed:', error),
+    onError: error => {
+      toastError(error);
+    },
     onSuccess: () => {
       qc.invalidateQueries({
         queryKey: ['goods', 'goods-by-user'],
@@ -43,16 +59,25 @@ export const TableBody = ({
     id: string;
     data: EditGoodsForm;
   }) => {
-    await fetchWithAuth(`${process.env.NEXT_PUBLIC_API_URL}/goods/${id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
+    const res = await fetchWithAuth(
+      `${process.env.NEXT_PUBLIC_API_URL}/goods/${id}`,
+      {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      },
+    );
+
+    if (!res.ok) {
+      handleErrorResponse(res);
+    }
   };
 
   const { mutate: updateMutate, isPending: isUpdatePending } = useMutation({
     mutationFn: updateGood,
-    onError: error => console.error('Update failed:', error),
+    onError: error => {
+      toastError(error);
+    },
     onSuccess: () => {
       qc.invalidateQueries({
         queryKey: ['goods', 'goods-by-user'],

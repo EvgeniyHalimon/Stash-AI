@@ -1,6 +1,11 @@
 'use client';
 
-import { fetchWithAuth, IUser } from '@/shared';
+import {
+  fetchWithAuth,
+  handleErrorResponse,
+  IUser,
+  toastError,
+} from '@/shared';
 import {
   getUserFromLocalStorage,
   removeUserDataFromLocalStorage,
@@ -40,12 +45,18 @@ export default function Profile() {
       closeEditModal();
     }
 
+    if (!res.ok) {
+      handleErrorResponse(res);
+    }
+
     return res;
   };
 
   const { mutate, isPending, isSuccess } = useMutation({
     mutationFn: patch,
-    onError: error => console.error('Update failed:', error),
+    onError: error => {
+      toastError(error);
+    },
   });
 
   const logout = () => {
