@@ -1,33 +1,22 @@
 'use client';
 
 import { createContext } from 'react';
-import { IGoods } from './types';
-import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
+import { IGoods, IHistory } from './types';
 
 export interface IDashboardContext {
   goods: IGoods[];
+  history: IHistory[];
   setGoods: (value: IGoods[]) => void;
-  refetch: (
-    options?: RefetchOptions,
-  ) => Promise<QueryObserverResult<any, Error>>;
+  setHistory: (value: IHistory[]) => void;
+  refetch: () => void;
 }
-
-const dummyRefetch = async () =>
-  Promise.resolve({
-    data: undefined,
-    error: null,
-    isLoading: false,
-    isFetching: false,
-    isSuccess: true,
-    isError: false,
-    status: 'success',
-    refetch: dummyRefetch,
-  } as QueryObserverResult<any, Error>);
 
 const initialState: IDashboardContext = {
   goods: [],
+  history: [],
   setGoods: val => val,
-  refetch: dummyRefetch,
+  setHistory: val => val,
+  refetch: () => {},
 };
 
 const DashboardContext = createContext<IDashboardContext>(initialState);

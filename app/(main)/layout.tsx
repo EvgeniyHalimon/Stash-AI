@@ -5,6 +5,7 @@ import {
   fetchWithAuth,
   formatLocalDate,
   IGoods,
+  IHistory,
   useCalendarContext,
 } from '@/shared';
 import DashboardContext from '@/shared/DashboardContext';
@@ -24,6 +25,16 @@ async function fetchGoods(params: { date: string }) {
   return res.json();
 }
 
+async function fetchHistory() {
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/history`;
+
+  const res = await fetchWithAuth(url);
+  if (!res.ok) {
+    throw new Error('Failed to fetch history');
+  }
+  return res.json();
+}
+
 export default function MainLayout({
   children,
 }: Readonly<{
@@ -31,15 +42,32 @@ export default function MainLayout({
 }>) {
   const calendarContextValue = useCalendarContext();
   const [goods, setGoods] = useState<IGoods[]>([]);
-  console.log('🚀 ~ goods:', goods);
+  const [history, setHistory] = useState<IHistory[]>([]);
   const { month, year } = useContext(CalendarContext);
   const { setGoods: setGoodsGlobal } = useContext(DashboardContext);
   const d = new Date(year, month, 1);
   const date = formatLocalDate(d);
 
-  const { data, isLoading, isFetching, refetch } = useQuery({
+  const {
+    data,
+    isLoading,
+    isFetching,
+    refetch: goodsRefetch,
+  } = useQuery({
     queryKey: ['goods-by-user', date],
     queryFn: () => fetchGoods({ date }),
+    staleTime: 1000 * 60 * 10,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+  });
+
+  const {
+    data: historyData,
+    isFetching: isHistoryFetching,
+    refetch: historyRefetch,
+  } = useQuery({
+    queryKey: ['history'],
+    queryFn: () => fetchHistory(),
     staleTime: 1000 * 60 * 10,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
@@ -52,11 +80,24 @@ export default function MainLayout({
     }
   }, [data, isLoading, isFetching]);
 
+  useEffect(() => {
+    if (historyData) {
+      setHistory(historyData);
+    }
+  }, [historyData, isHistoryFetching]);
+
+  const refetch = () => {
+    goodsRefetch();
+    historyRefetch();
+  };
+
   const dashboardContext = useMemo(
     () => ({
       goods,
       setGoods,
       refetch,
+      history,
+      setHistory,
     }),
     [goods, refetch, isFetching],
   );

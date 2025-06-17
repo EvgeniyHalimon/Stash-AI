@@ -41,6 +41,11 @@ export interface IGoods {
   updatedAt: Date;
 }
 
+export interface IHistory {
+  date: string;
+  amount: number;
+}
+
 export interface IGoodsParams {
   page: number;
   limit: number;

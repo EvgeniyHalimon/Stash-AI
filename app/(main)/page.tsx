@@ -6,6 +6,7 @@ import {
   ChartByEachCategory,
   ChartByEachProductRemainingToBePostponed,
   MonthPicker,
+  ChartByHistoryOfPostponement,
 } from '@/components';
 
 export default function Home() {
@@ -24,6 +25,7 @@ export default function Home() {
         <ChartByEachCategory />
         <ChartByEachProductRemainingToBePostponed />
       </div>
+      <ChartByHistoryOfPostponement />
       <StashTable />
     </div>
   );
